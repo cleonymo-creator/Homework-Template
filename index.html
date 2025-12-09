@@ -2474,7 +2474,202 @@
         </div>
       );
     }
-⚠️ Score Below 50%</h3>
+    
+    // =====================================================
+    // MAIN QUESTION CARD
+    // =====================================================
+    
+    function QuestionCard({
+      task,
+      questionNumber,
+      totalQuestions,
+      answer,
+      setAnswer,
+      suppAnswer,
+      setSuppAnswer,
+      state,
+      onMainSubmit,
+      onSuppSubmit,
+      onNext,
+      onPrev,
+      isFirst,
+      isLast
+    }) {
+      const [isGrading, setIsGrading] = useState(false);
+      
+      const canSubmitMain = () => {
+        if (state.mainSubmitted && !state.needsRetry) return false;
+        if (!answer) return false;
+        
+        if (task.type === 'multiple-choice' || task.type === 'true-false') {
+          return answer.selected !== undefined;
+        }
+        if (task.type === 'free-text') {
+          return answer.text && answer.text.trim().length >= 10;
+        }
+        return false;
+      };
+      
+      const handleMainSubmit = async () => {
+        if (task.type === 'free-text') {
+          setIsGrading(true);
+        }
+        await onMainSubmit();
+        setIsGrading(false);
+      };
+      
+      const handleRetry = () => {
+        if (task.type === 'free-text') {
+          setAnswer({ text: '' });
+        } else {
+          setAnswer(null);
+        }
+      };
+      
+      const canProceed = () => {
+        if (!state.mainSubmitted) return false;
+        if (state.needsRetry) return false;
+        if (state.needsSupplementary && !state.supplementaryComplete) return false;
+        if (state.supplementaryComplete && state.canProceedAfterSupp === false) return false;
+        return true;
+      };
+      
+      const getCorrectAnswerText = () => {
+        if (task.type === 'multiple-choice') {
+          return task.options[task.correctAnswer];
+        }
+        if (task.type === 'true-false') {
+          return task.correctAnswer ? 'True' : 'False';
+        }
+        return task.correctAnswer;
+      };
+      
+      return (
+        <div className="card question-card">
+          {/* Header */}
+          <div className="question-header">
+            <span className="question-badge">
+              <span>Q{questionNumber}</span>
+              <span style={{ opacity: 0.7 }}>of {totalQuestions}</span>
+            </span>
+            <span className="points-badge">
+              <span>⭐</span>
+              <span>{task.points} {task.points === 1 ? 'point' : 'points'}</span>
+            </span>
+          </div>
+          
+          {/* Question Text */}
+          <p className="question-text">{task.question}</p>
+          
+          {/* Question Input */}
+          {task.type === 'multiple-choice' && (
+            <MultipleChoiceQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'true-false' && (
+            <TrueFalseQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'free-text' && (
+            <FreeTextQuestion
+              task={task}
+              answer={state.needsRetry ? { text: '' } : answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+            />
+          )}
+          
+          {/* Grading Indicator */}
+          {isGrading && (
+            <div className="grading-indicator">
+              <span className="spinner"></span>
+              <span className="grading-text">AI is grading your response...</span>
+            </div>
+          )}
+          
+          {/* Main Feedback */}
+          {state.mainSubmitted && !state.needsRetry && state.feedback && (
+            <div className={`feedback-box ${
+              state.isCorrect ? 'feedback-correct' : 
+              (state.aiGrading?.score >= 50 ? 'feedback-partial' : 'feedback-incorrect')
+            }`}>
+              <div className="feedback-header">
+                <span className="feedback-icon">
+                  {state.isCorrect ? '✅' : (state.aiGrading?.score >= 50 ? '⚡' : '❌')}
+                </span>
+                <span className="feedback-title">
+                  {state.isCorrect ? 'Correct!' : 
+                   (task.type === 'free-text' ? 'Answer Graded' : 'Not quite right')}
+                </span>
+                {task.type === 'free-text' && state.aiGrading && (
+                  <span className="feedback-score">{state.aiGrading.score}%</span>
+                )}
+              </div>
+              
+              <p className="feedback-explanation">
+                {state.feedback.feedback || state.feedback || task.explanation}
+              </p>
+              
+              {/* AI Feedback Details */}
+              {task.type === 'free-text' && state.aiGrading && (
+                <div className="ai-feedback">
+                  {state.aiGrading.goodPoints && state.aiGrading.goodPoints.length > 0 && (
+                    <div className="ai-feedback-section">
+                      <div className="ai-feedback-label good">✓ Strong Points</div>
+                      <ul className="ai-feedback-list">
+                        {state.aiGrading.goodPoints.map((point, i) => (
+                          <li key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {state.aiGrading.missedPoints && state.aiGrading.missedPoints.length > 0 && (
+                    <div className="ai-feedback-section">
+                      <div className="ai-feedback-label improve">△ Could Include</div>
+                      <ul className="ai-feedback-list">
+                        {state.aiGrading.missedPoints.map((point, i) => (
+                          <li key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {state.aiGrading.improvements && (
+                    <div className="ai-feedback-section">
+                      <div className="ai-feedback-label tip">💡 Suggestion</div>
+                      <p className="ai-feedback-tip">{state.aiGrading.improvements}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Correct Answer Reveal for MCQ/TF */}
+              {!state.isCorrect && task.type !== 'free-text' && (
+                <div className="correct-answer-reveal">
+                  <div className="correct-answer-label">Correct Answer</div>
+                  <div className="correct-answer-text">{getCorrectAnswerText()}</div>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Retry Banner */}
+          {state.needsRetry && (
+            <div className="retry-banner">
+              <h3>⚠️ Score Below 50%</h3>
               <p>Your response needs more detail. Please revise and resubmit your answer.</p>
             </div>
           )}
