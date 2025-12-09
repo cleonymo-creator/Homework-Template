@@ -1,279 +1,214 @@
-// ============================================
-// HOMEWORK CONFIGURATION
-// ============================================
-// This is the ONLY file you need to edit to create your homework!
-// The AI will generate this file based on your topic and requirements.
-// ============================================
-
 window.HOMEWORK_CONFIG = {
   // Basic Information
-  title: "Sample Homework - All Question Types",
-  subject: "General Knowledge",
-  yearGroup: "Year 8",
+  title: "The World of William Shakespeare",
+  subject: "English Literature",
+  yearGroup: "Year 9 / Grade 8",
+  instructions: "Complete this homework to test your knowledge of the Bard's life, plays, and poetic style. You need 70% to pass.",
   
-  // Instructions shown to students
-  instructions: "This sample homework demonstrates all available question types. Read each question carefully and provide thoughtful answers.",
-  
-  // Pass threshold (percentage)
+  // Settings
   passThreshold: 70,
+  teacherPassword: "bard1616",
   
-  // Teacher dashboard password
-  teacherPassword: "teacher123",
-  
-  // ============================================
-  // QUESTIONS
-  // ============================================
-  // Available question types:
-  // - "multiple-choice"     : Select one correct answer
-  // - "true-false"          : True or False
-  // - "free-text"           : Written answer (AI graded)
-  // - "ordering"            : Arrange items in correct order
-  // - "matching"            : Match items from two columns
-  // - "fill-blanks"         : Fill in missing words from word bank
-  // - "categorise"          : Sort items into categories
-  // - "multiple-response"   : Select ALL correct answers
-  // - "cloze-dropdown"      : Select from dropdowns in passage
-  // ============================================
-  
+  // Questions Array
   questions: [
-    // ==========================================
-    // 1. MULTIPLE CHOICE
-    // ==========================================
     {
       id: 1,
       type: "multiple-choice",
-      question: "What is the capital city of France?",
-      options: [
-        "London",
-        "Paris",
-        "Berlin",
-        "Madrid"
-      ],
+      question: "In which English town was William Shakespeare born and buried?",
+      options: ["London", "Stratford-upon-Avon", "Oxford", "Canterbury"],
       correctAnswer: 1,
-      explanation: "Paris is the capital and largest city of France, known for the Eiffel Tower and its rich cultural history.",
+      explanation: "Shakespeare was born in Stratford-upon-Avon in 1564 and returned there later in life.",
       points: 5,
-      
       supplementary: {
         type: "true-false",
-        question: "The Eiffel Tower is located in Paris.",
+        question: "Shakespeare was born in the 16th Century.",
         correctAnswer: true,
-        explanation: "The Eiffel Tower was built in 1889 and is one of the most recognisable landmarks in Paris."
+        explanation: "He was born in 1564, which is in the 16th century."
       }
     },
-    
-    // ==========================================
-    // 2. TRUE/FALSE
-    // ==========================================
     {
       id: 2,
-      type: "true-false",
-      question: "Water boils at 100 degrees Celsius at sea level.",
-      correctAnswer: true,
-      explanation: "At standard atmospheric pressure (sea level), pure water boils at exactly 100°C (212°F).",
-      points: 5,
-      
-      supplementary: {
-        type: "multiple-choice",
-        question: "At what temperature does water freeze?",
-        options: ["0°C", "10°C", "-10°C", "32°C"],
-        correctAnswer: 0,
-        explanation: "Water freezes at 0°C (32°F) at standard atmospheric pressure."
-      }
-    },
-    
-    // ==========================================
-    // 3. ORDERING
-    // ==========================================
-    {
-      id: 3,
-      type: "ordering",
-      question: "Arrange these planets in order from closest to furthest from the Sun:",
-      items: [
-        "Earth",
-        "Mars",
-        "Mercury",
-        "Venus"
-      ],
-      correctOrder: [2, 3, 0, 1],
-      explanation: "The order from the Sun is: Mercury, Venus, Earth, Mars. These are the four inner rocky planets.",
+      type: "fill-blanks",
+      question: "Complete the description of Shakespeare's theatre:",
+      template: "Shakespeare's most famous plays were performed at the {{blank1}} Theatre. The poorer audience members, known as {{blank2}}, stood in the pit to watch the plays for a penny.",
+      blanks: {
+        blank1: { 
+          answer: "Globe", 
+          acceptAlternatives: ["The Globe"] 
+        },
+        blank2: { 
+          answer: "groundlings", 
+          acceptAlternatives: ["peasant", "commoners"] 
+        }
+      },
+      explanation: "The Globe Theatre was a circular, open-air venue. 'Groundlings' stood on the ground to watch.",
       points: 10,
-      
       supplementary: {
         type: "true-false",
-        question: "Jupiter is closer to the Sun than Mars.",
+        question: "The original Globe Theatre had a roof over the entire structure.",
         correctAnswer: false,
-        explanation: "Mars is the 4th planet from the Sun, while Jupiter is the 5th. The asteroid belt lies between them."
+        explanation: "It was an open-air amphitheatre; only the seating galleries and stage were covered."
       }
     },
-    
-    // ==========================================
-    // 4. MATCHING
-    // ==========================================
+    {
+      id: 3,
+      type: "categorise",
+      question: "Sort these famous plays into their correct genres:",
+      categories: ["Tragedy", "Comedy", "History"],
+      items: [
+        { text: "Romeo and Juliet", correctCategory: 0 },
+        { text: "A Midsummer Night's Dream", correctCategory: 1 },
+        { text: "Henry V", correctCategory: 2 },
+        { text: "Macbeth", correctCategory: 0 },
+        { text: "Twelfth Night", correctCategory: 1 },
+        { text: "Richard III", correctCategory: 2 }
+      ],
+      explanation: "Tragedies end in death/sorrow, Comedies usually end in marriage, and Histories depict English kings.",
+      points: 15,
+      supplementary: {
+        type: "multiple-choice",
+        question: "Which of these is a key feature of a Shakespearean Comedy?",
+        options: ["Death of the main character", "Marriage and mistaken identities", "War and politics", "Ghosts and witches"],
+        correctAnswer: 1,
+        explanation: "Comedies often feature confusion, disguise, and end with a wedding."
+      }
+    },
     {
       id: 4,
       type: "matching",
-      question: "Match each country to its capital city:",
-      leftItems: ["Japan", "Australia", "Brazil", "Egypt"],
-      rightItems: ["Canberra", "Tokyo", "Cairo", "Brasília"],
-      correctPairs: { 
-        0: 1,
-        1: 0,
-        2: 3,
-        3: 2
+      question: "Match the famous villain to the play they appear in:",
+      leftItems: ["Iago", "Shylock", "Lady Macbeth", "Claudius"],
+      rightItems: ["Othello", "The Merchant of Venice", "Macbeth", "Hamlet"],
+      correctPairs: {
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3
       },
-      explanation: "Capital cities are often different from the largest or most famous cities in a country.",
+      explanation: "Iago manipulates Othello, Shylock demands a pound of flesh, Lady Macbeth urges her husband to kill, and Claudius kills Hamlet's father.",
       points: 10,
-      
       supplementary: {
         type: "multiple-choice",
-        question: "Which is the largest city in Australia (not the capital)?",
-        options: ["Melbourne", "Sydney", "Brisbane", "Perth"],
+        question: "Who is the primary villain in 'Romeo and Juliet'?",
+        options: ["Tybalt", "There is no single villain", "The Prince", "Friar Laurence"],
         correctAnswer: 1,
-        explanation: "Sydney is Australia's largest city by population, but Canberra is the capital."
+        explanation: "While Tybalt is an antagonist, the play is driven by fate and the ancient feud, rather than a single villain."
       }
     },
-    
-    // ==========================================
-    // 5. FILL IN THE BLANKS (with word bank)
-    // ==========================================
     {
       id: 5,
-      type: "fill-blanks",
-      question: "Complete this passage about the water cycle:",
-      template: "Water from oceans and lakes {{blank1}} to form clouds. When clouds become heavy, {{blank2}} falls as rain or snow. Water then flows through {{blank3}} back to the ocean, completing the {{blank4}}.",
+      type: "cloze-dropdown",
+      question: "Select the correct missing words from these famous quotes:",
+      template: "'To be, or not to be: that is the {{blank1}}.' (Hamlet) \n 'All the world's a {{blank2}}.' (As You Like It)",
       blanks: {
-        blank1: { answer: "evaporates", acceptAlternatives: ["evaporate"] },
-        blank2: { answer: "precipitation", acceptAlternatives: ["water", "rain"] },
-        blank3: { answer: "rivers", acceptAlternatives: ["streams", "waterways"] },
-        blank4: { answer: "cycle", acceptAlternatives: ["water cycle", "process"] }
+        blank1: {
+          options: ["answer", "question", "problem", "reason"],
+          correctIndex: 1
+        },
+        blank2: {
+          options: ["stage", "cage", "dream", "game"],
+          correctIndex: 0
+        }
       },
-      explanation: "The water cycle (evaporation, condensation, precipitation, collection) is essential for distributing water around our planet.",
+      explanation: "These are two of Shakespeare's most quoted metaphors concerning existence and life.",
       points: 10,
-      
       supplementary: {
         type: "true-false",
-        question: "Evaporation only happens from oceans.",
+        question: "The line 'Wherefore art thou Romeo?' means 'Where are you Romeo?'",
         correctAnswer: false,
-        explanation: "Evaporation occurs from any body of water including lakes, rivers, puddles, and even wet surfaces."
+        explanation: "'Wherefore' actually means 'Why'. She is asking 'Why are you a Montague?'"
       }
     },
-    
-    // ==========================================
-    // 6. CATEGORISATION
-    // ==========================================
     {
       id: 6,
-      type: "categorise",
-      question: "Sort these animals into the correct categories:",
-      categories: ["Mammals", "Reptiles", "Birds"],
+      type: "ordering",
+      question: "Arrange the 'Seven Ages of Man' (from As You Like It) in the correct chronological order:",
       items: [
-        { text: "Eagle", correctCategory: 2 },
-        { text: "Crocodile", correctCategory: 1 },
-        { text: "Dolphin", correctCategory: 0 },
-        { text: "Snake", correctCategory: 1 },
-        { text: "Penguin", correctCategory: 2 },
-        { text: "Whale", correctCategory: 0 }
+        "The Justice (Judge)",
+        "The Infant",
+        "The Soldier",
+        "The Schoolboy"
       ],
-      explanation: "Mammals are warm-blooded and nurse their young. Reptiles are cold-blooded with scales. Birds have feathers and most can fly.",
-      points: 15,
-      
+      correctOrder: [1, 3, 2, 0], // Infant -> Schoolboy -> Soldier -> Justice
+      explanation: "The speech outlines life from birth (Infant) to childhood (Schoolboy), young adulthood (Soldier), and middle age (Justice).",
+      points: 10,
       supplementary: {
         type: "multiple-choice",
-        question: "What makes dolphins mammals rather than fish?",
-        options: [
-          "They live in water",
-          "They breathe air and nurse their young",
-          "They have fins",
-          "They eat fish"
-        ],
-        correctAnswer: 1,
-        explanation: "Dolphins breathe air through a blowhole, give live birth, and nurse their young with milk - all mammal characteristics."
+        question: "What is the very last stage mentioned in the 'Seven Ages of Man' speech?",
+        options: ["Second childishness / Oblivion", "The Grandfather", "The King", "The Ghost"],
+        correctAnswer: 0,
+        explanation: "The speech ends with 'second childishness and mere oblivion, sans teeth, sans eyes, sans taste, sans everything.'"
       }
     },
-    
-    // ==========================================
-    // 7. MULTIPLE RESPONSE (Select ALL that apply)
-    // ==========================================
     {
       id: 7,
       type: "multiple-response",
-      question: "Which of these are primary colours? (Select ALL that apply)",
+      question: "Which of the following are characteristics of Iambic Pentameter? (Select ALL that apply)",
       options: [
-        "Red",
-        "Green",
-        "Blue",
-        "Yellow",
-        "Orange",
-        "Purple"
+        "It mimics the rhythm of a heartbeat (da-DUM)",
+        "It always rhymes",
+        "It has 10 syllables per line",
+        "It is only used for insults"
       ],
-      correctAnswers: [0, 2, 3],
+      correctAnswers: [0, 2],
       partialCredit: true,
-      explanation: "In traditional colour theory (paints/pigments), the primary colours are red, blue, and yellow. They cannot be made by mixing other colours.",
+      explanation: "Iambic pentameter consists of 5 iambs (10 syllables) and sounds like a heartbeat. It does not always rhyme (blank verse).",
       points: 10,
-      
-      supplementary: {
-        type: "true-false",
-        question: "Orange is made by mixing red and yellow.",
-        correctAnswer: true,
-        explanation: "Orange is a secondary colour created by mixing the primary colours red and yellow."
-      }
-    },
-    
-    // ==========================================
-    // 8. CLOZE DROPDOWN
-    // ==========================================
-    {
-      id: 8,
-      type: "cloze-dropdown",
-      question: "Complete this sentence about photosynthesis:",
-      template: "Plants use {{blank1}} from the sun and {{blank2}} from the air to make {{blank3}} through a process called photosynthesis.",
-      blanks: {
-        blank1: { 
-          options: ["water", "light", "soil", "wind"], 
-          correctIndex: 1 
-        },
-        blank2: { 
-          options: ["oxygen", "nitrogen", "carbon dioxide", "hydrogen"], 
-          correctIndex: 2 
-        },
-        blank3: { 
-          options: ["oxygen", "glucose", "protein", "water"], 
-          correctIndex: 1 
-        }
-      },
-      explanation: "Photosynthesis: Light + Carbon Dioxide + Water = Glucose + Oxygen. Plants use this process to make their own food.",
-      points: 10,
-      
-      supplementary: {
-        type: "true-false",
-        question: "Photosynthesis releases oxygen into the air.",
-        correctAnswer: true,
-        explanation: "Oxygen is a by-product of photosynthesis, which is why plants are essential for maintaining breathable air."
-      }
-    },
-    
-    // ==========================================
-    // 9. FREE TEXT (AI Graded)
-    // ==========================================
-    {
-      id: 9,
-      type: "free-text",
-      question: "Explain why recycling is important for the environment. Give at least two reasons.",
-      correctAnswer: "Recycling is important because it reduces the amount of waste sent to landfills, conserves natural resources like trees and minerals, saves energy compared to making new products, reduces pollution from manufacturing, and helps protect wildlife habitats from destruction.",
-      explanation: "Recycling is a key part of the reduce, reuse, recycle approach to environmental sustainability.",
-      points: 15,
-      
       supplementary: {
         type: "multiple-choice",
-        question: "Which of these materials can typically be recycled?",
-        options: [
-          "Plastic bottles only",
-          "Paper, glass, and metal",
-          "Only cardboard",
-          "Nothing can be recycled"
-        ],
+        question: "What is 'Blank Verse'?",
+        options: ["Poetry without words", "Unrhymed iambic pentameter", "Rhyming couplets", "Prose"],
         correctAnswer: 1,
-        explanation: "Many materials including paper, cardboard, glass bottles, metal cans, and certain plastics can be recycled."
+        explanation: "Blank verse uses the meter (rhythm) but does not use rhyme at the end of lines."
+      }
+    },
+    {
+      id: 8,
+      type: "true-false",
+      question: "In Shakespeare's time, female roles were played by women.",
+      correctAnswer: false,
+      explanation: "Acting was not considered a respectable profession for women; young boys played the female roles.",
+      points: 5,
+      supplementary: {
+        type: "true-false",
+        question: "Queen Elizabeth I was a patron of the arts and enjoyed the theatre.",
+        correctAnswer: true,
+        explanation: "The Queen was a major supporter of the theatre, protecting it from critics."
+      }
+    },
+    {
+      id: 9,
+      type: "multiple-choice",
+      question: "What is a 'Soliloquy'?",
+      options: [
+        "A fight scene between two characters",
+        "A character speaking their thoughts aloud while alone on stage",
+        "A conversation between a king and a fool",
+        "The final scene of a play"
+      ],
+      correctAnswer: 1,
+      explanation: "A soliloquy allows the audience to hear a character's inner thoughts and motivations.",
+      points: 5,
+      supplementary: {
+        type: "true-false",
+        question: "Other characters on stage can usually hear a soliloquy.",
+        correctAnswer: false,
+        explanation: "By definition, a soliloquy is spoken when the character is alone or thinks they are alone."
+      }
+    },
+    {
+      id: 10,
+      type: "free-text",
+      question: "Explain the concept of a 'Tragic Flaw' (Hamartia) and give one example from a Shakespeare play.",
+      correctAnswer: "AI Grading Points: Mention that it is a personality trait that leads to the hero's downfall. Examples: Macbeth (Ambition), Othello (Jealousy), Hamlet (Indecision/Inaction), Romeo (Impulsiveness).",
+      explanation: "A tragic flaw is a defect in the protagonist's character that ultimately brings about their ruin.",
+      points: 15,
+      supplementary: {
+        type: "multiple-choice",
+        question: "What was Macbeth's tragic flaw?",
+        options: ["Greed", "Ambition", "Laziness", "Cowardice"],
+        correctAnswer: 1,
+        explanation: "Macbeth's 'vaulting ambition' led him to murder the King and destroy himself."
       }
     }
   ]
