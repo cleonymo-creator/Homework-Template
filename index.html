@@ -1,0 +1,3660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Homework</title>
+  
+  <!-- Premium Font Stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Commissioner:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Configuration -->
+  <script src="config/homework.js"></script>
+  <script src="config/theme.js"></script>
+  
+  <style>
+    /* =====================================================
+       HOMEWORK TEMPLATE v5.0 - PREMIUM EDITION
+       Aesthetic: Refined Academic / Modern Scholarly
+       ===================================================== */
+    
+    :root {
+      /* Color System - Warm scholarly palette */
+      --color-primary: #1e3a5f;
+      --color-primary-light: #2d5a87;
+      --color-primary-dark: #0f1f33;
+      --color-secondary: #3d7ea6;
+      --color-accent: #c9a227;
+      --color-accent-light: #e8c547;
+      
+      /* Neutrals - Warm paper tones */
+      --color-bg: #faf8f5;
+      --color-bg-alt: #f5f1eb;
+      --color-surface: #ffffff;
+      --color-surface-elevated: #ffffff;
+      --color-border: #e8e2d9;
+      --color-border-light: #f0ebe3;
+      
+      /* Text */
+      --color-text: #2c2416;
+      --color-text-secondary: #5c5347;
+      --color-text-muted: #8a8279;
+      --color-text-inverse: #faf8f5;
+      
+      /* Semantic */
+      --color-success: #2d6a4f;
+      --color-success-light: #d4edda;
+      --color-success-bg: #e8f5e9;
+      --color-error: #9b2c2c;
+      --color-error-light: #f8d7da;
+      --color-error-bg: #fef2f2;
+      --color-warning: #b45309;
+      --color-warning-light: #fef3c7;
+      --color-warning-bg: #fffbeb;
+      --color-info: #1e40af;
+      --color-info-light: #dbeafe;
+      --color-info-bg: #eff6ff;
+      
+      /* Typography */
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Commissioner', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      
+      /* Borders & Shadows */
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 2px rgba(44, 36, 22, 0.04);
+      --shadow-md: 0 4px 12px rgba(44, 36, 22, 0.08);
+      --shadow-lg: 0 8px 24px rgba(44, 36, 22, 0.12);
+      --shadow-xl: 0 16px 48px rgba(44, 36, 22, 0.16);
+      --shadow-glow: 0 0 40px rgba(201, 162, 39, 0.15);
+      
+      /* Transitions */
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+      --transition-slow: 400ms ease;
+      --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    /* =====================================================
+       BASE STYLES
+       ===================================================== */
+    
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    /* Subtle texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    #root {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* =====================================================
+       TYPOGRAPHY
+       ===================================================== */
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--color-text);
+    }
+    
+    h1 { font-size: 2.25rem; letter-spacing: -0.02em; }
+    h2 { font-size: 1.75rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1.375rem; }
+    h4 { font-size: 1.125rem; }
+    
+    p {
+      color: var(--color-text-secondary);
+    }
+    
+    strong {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    
+    /* =====================================================
+       LAYOUT
+       ===================================================== */
+    
+    .app-container {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      padding-top: var(--space-xl);
+      padding-bottom: var(--space-3xl);
+    }
+    
+    .dashboard-container {
+      max-width: 1200px;
+    }
+    
+    /* =====================================================
+       HEADER
+       ===================================================== */
+    
+    .app-header {
+      position: relative;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--space-2xl);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .app-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(201, 162, 39, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .app-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light), var(--color-accent));
+    }
+    
+    .app-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-text-inverse);
+      margin-bottom: var(--space-xs);
+      position: relative;
+    }
+    
+    .app-header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+    
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.9rem;
+    }
+    
+    .header-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      opacity: 0.85;
+    }
+    
+    /* =====================================================
+       CARDS
+       ===================================================== */
+    
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border-light);
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+    }
+    
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .card-elevated {
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .card-accent {
+      border-left: 4px solid var(--color-accent);
+    }
+    
+    /* =====================================================
+       PROGRESS BAR
+       ===================================================== */
+    
+    .progress-section {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+    
+    .progress-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+    
+    .progress-stats {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+    }
+    
+    .progress-bar {
+      height: 10px;
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
+      position: relative;
+    }
+    
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    /* =====================================================
+       QUESTION CARD
+       ===================================================== */
+    
+    .question-card {
+      position: relative;
+    }
+    
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .question-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    .points-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+      color: var(--color-primary-dark);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .question-text {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--color-text);
+      margin-bottom: var(--space-xl);
+    }
+    
+    /* =====================================================
+       OPTIONS (MCQ & True/False)
+       ===================================================== */
+    
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    
+    .option-button {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: left;
+      font-size: 1rem;
+      color: var(--color-text);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .option-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--color-primary);
+      opacity: 0.05;
+      transition: width var(--transition-base);
+    }
+    
+    .option-button:hover:not(:disabled)::before {
+      width: 100%;
+    }
+    
+    .option-button:hover:not(:disabled) {
+      border-color: var(--color-primary-light);
+      transform: translateX(4px);
+    }
+    
+    .option-button.selected {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+    }
+    
+    .option-button.selected::before {
+      width: 100%;
+      background: var(--color-primary);
+      opacity: 0.08;
+    }
+    
+    .option-button.correct {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    
+    .option-button.correct::before {
+      width: 100%;
+      background: var(--color-success);
+      opacity: 0.1;
+    }
+    
+    .option-button.incorrect {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+    
+    .option-button.incorrect::before {
+      width: 100%;
+      background: var(--color-error);
+      opacity: 0.1;
+    }
+    
+    .option-button:disabled {
+      cursor: default;
+    }
+    
+    .option-letter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+      font-family: var(--font-mono);
+    }
+    
+    .option-button.selected .option-letter {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+    
+    .option-button.correct .option-letter {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: var(--color-text-inverse);
+    }
+    
+    .option-button.incorrect .option-letter {
+      background: var(--color-error);
+      border-color: var(--color-error);
+      color: var(--color-text-inverse);
+    }
+    
+    .option-text {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* True/False specific */
+    .tf-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+    
+    .tf-button {
+      justify-content: center;
+      padding: var(--space-lg);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .tf-button .option-letter {
+      width: 44px;
+      height: 44px;
+      font-size: 1.25rem;
+    }
+    
+    /* =====================================================
+       FREE TEXT INPUT
+       ===================================================== */
+    
+    .free-text-container {
+      position: relative;
+    }
+    
+    .free-text-input {
+      width: 100%;
+      min-height: 180px;
+      padding: var(--space-lg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text);
+      background: var(--color-bg);
+      resize: vertical;
+      transition: all var(--transition-fast);
+    }
+    
+    .free-text-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      background: var(--color-surface);
+      box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+    }
+    
+    .free-text-input:disabled {
+      background: var(--color-bg-alt);
+      color: var(--color-text-secondary);
+      cursor: not-allowed;
+    }
+    
+    .free-text-input::placeholder {
+      color: var(--color-text-muted);
+    }
+    
+    .input-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-sm);
+    }
+    
+    .char-count {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+    }
+    
+    .paste-warning {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-warning-bg);
+      border: 1px solid var(--color-warning-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--color-warning);
+      animation: shake 0.5s ease;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    /* =====================================================
+       FEEDBACK BOXES
+       ===================================================== */
+    
+    .feedback-box {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      animation: feedbackSlide 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes feedbackSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .feedback-correct {
+      background: linear-gradient(135deg, var(--color-success-bg) 0%, #d1fae5 100%);
+      border: 1px solid #a7f3d0;
+    }
+    
+    .feedback-correct::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-success);
+    }
+    
+    .feedback-incorrect {
+      background: linear-gradient(135deg, var(--color-error-bg) 0%, #fecaca 100%);
+      border: 1px solid #fca5a5;
+    }
+    
+    .feedback-incorrect::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-error);
+    }
+    
+    .feedback-partial {
+      background: linear-gradient(135deg, var(--color-warning-bg) 0%, #fef3c7 100%);
+      border: 1px solid #fcd34d;
+    }
+    
+    .feedback-partial::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-warning);
+    }
+    
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    
+    .feedback-icon {
+      font-size: 1.5rem;
+    }
+    
+    .feedback-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    
+    .feedback-score {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: var(--space-xs) var(--space-sm);
+      background: rgba(255,255,255,0.5);
+      border-radius: var(--radius-sm);
+    }
+    
+    .feedback-explanation {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    
+    .correct-answer-reveal {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-text-muted);
+    }
+    
+    .correct-answer-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .correct-answer-text {
+      color: var(--color-text);
+      font-weight: 500;
+    }
+    
+    /* AI Feedback Details */
+    .ai-feedback {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .ai-feedback-section {
+      margin-bottom: var(--space-md);
+    }
+    
+    .ai-feedback-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .ai-feedback-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .ai-feedback-label.good {
+      color: var(--color-success);
+    }
+    
+    .ai-feedback-label.improve {
+      color: var(--color-error);
+    }
+    
+    .ai-feedback-label.tip {
+      color: var(--color-info);
+    }
+    
+    .ai-feedback-list {
+      list-style: none;
+      padding-left: var(--space-md);
+    }
+    
+    .ai-feedback-list li {
+      position: relative;
+      padding-left: var(--space-md);
+      margin-bottom: var(--space-xs);
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+    }
+    
+    .ai-feedback-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--color-text-muted);
+    }
+    
+    .ai-feedback-tip {
+      font-style: italic;
+      color: var(--color-text-secondary);
+      padding-left: var(--space-md);
+      border-left: 2px solid var(--color-info);
+    }
+    
+    /* =====================================================
+       SUPPLEMENTARY QUESTION
+       ===================================================== */
+    
+    .supplementary-box {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl);
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 2px solid #7dd3fc;
+      border-radius: var(--radius-lg);
+      animation: supplementarySlide 0.5s ease;
+      position: relative;
+    }
+    
+    @keyframes supplementarySlide {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .supplementary-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: var(--space-xl);
+      right: var(--space-xl);
+      height: 4px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #0284c7);
+      border-radius: var(--radius-full);
+    }
+    
+    .supplementary-box.complete {
+      opacity: 0.9;
+    }
+    
+    .supplementary-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .supplementary-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .supplementary-title {
+      font-weight: 600;
+      color: #0c4a6e;
+      font-size: 0.9rem;
+    }
+    
+    .supplementary-question {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #0c4a6e;
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+    
+    .saved-answer-display {
+      padding: var(--space-md);
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-md);
+    }
+    
+    .saved-answer-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #0c4a6e;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .saved-answer-text {
+      color: var(--color-text);
+      font-weight: 500;
+    }
+    
+    .proceed-status {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    
+    .proceed-waiting {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+      border: 1px solid var(--color-warning-light);
+    }
+    
+    .proceed-ready {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid var(--color-success-light);
+    }
+    
+    /* =====================================================
+       RETRY BANNER
+       ===================================================== */
+    
+    .retry-banner {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl);
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border: 2px solid #f87171;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      animation: retryPulse 2s ease infinite;
+    }
+    
+    @keyframes retryPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); }
+    }
+    
+    .retry-banner h3 {
+      color: #b91c1c;
+      margin-bottom: var(--space-sm);
+      font-size: 1.25rem;
+    }
+    
+    .retry-banner p {
+      color: #991b1b;
+    }
+    
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn:active::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .btn:disabled::before {
+      display: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      color: var(--color-text-inverse);
+      box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+    
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--color-border-light);
+      border-color: var(--color-text-muted);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, var(--color-success), #34d399);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-success:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .btn-large {
+      padding: var(--space-lg) var(--space-2xl);
+      font-size: 1.1rem;
+    }
+    
+    .btn-icon {
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+    }
+    
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+    
+    .question-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--color-border-light);
+    }
+    
+    /* =====================================================
+       LOGIN SCREEN
+       ===================================================== */
+    
+    .login-container {
+      max-width: 440px;
+      margin: var(--space-3xl) auto;
+    }
+    
+    .login-card {
+      text-align: center;
+      padding: var(--space-2xl);
+    }
+    
+    .login-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-lg);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .login-card h2 {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-xs);
+      color: var(--color-primary);
+    }
+    
+    .login-card .login-subtitle {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-xl);
+    }
+    
+    .login-form {
+      text-align: left;
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+      transition: all var(--transition-fast);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      background: var(--color-surface);
+      box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+    }
+    
+    .form-input::placeholder {
+      color: var(--color-text-muted);
+    }
+    
+    .error-message {
+      padding: var(--space-md);
+      background: var(--color-error-bg);
+      border: 1px solid var(--color-error-light);
+      border-radius: var(--radius-md);
+      color: var(--color-error);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .login-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+    
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+    
+    /* =====================================================
+       REVIEW SCREEN
+       ===================================================== */
+    
+    .review-header {
+      margin-bottom: var(--space-xl);
+    }
+    
+    .review-header h2 {
+      margin-bottom: var(--space-sm);
+    }
+    
+    .review-list {
+      margin-bottom: var(--space-xl);
+    }
+    
+    .review-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    
+    .review-item:hover {
+      background: var(--color-bg-alt);
+      transform: translateX(4px);
+    }
+    
+    .review-status {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    
+    .review-status.correct {
+      background: var(--color-success-bg);
+    }
+    
+    .review-status.incorrect {
+      background: var(--color-error-bg);
+    }
+    
+    .review-status.partial {
+      background: var(--color-warning-bg);
+    }
+    
+    .review-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .review-question {
+      font-weight: 500;
+      color: var(--color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .review-score {
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      color: var(--color-text-muted);
+    }
+    
+    .review-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    
+    .review-actions .btn {
+      flex: 1;
+    }
+    
+    /* =====================================================
+       SUBMISSION FORM
+       ===================================================== */
+    
+    .submission-container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    
+    .score-display {
+      text-align: center;
+      padding: var(--space-2xl);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      border-radius: var(--radius-xl);
+      color: var(--color-text-inverse);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .score-display::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+    
+    .score-display.pass {
+      background: linear-gradient(135deg, var(--color-success), #059669);
+    }
+    
+    .score-display.fail {
+      background: linear-gradient(135deg, var(--color-error), #b91c1c);
+    }
+    
+    .score-value {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+      position: relative;
+    }
+    
+    .score-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .score-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: rgba(255,255,255,0.2);
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--color-primary);
+    }
+    
+    .checkbox-group label {
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    
+    .form-buttons {
+      display: flex;
+      gap: var(--space-md);
+    }
+    
+    .form-buttons .btn {
+      flex: 1;
+    }
+    
+    /* =====================================================
+       SUCCESS SCREEN
+       ===================================================== */
+    
+    .success-container {
+      text-align: center;
+      padding: var(--space-3xl) var(--space-xl);
+    }
+    
+    .success-icon {
+      font-size: 6rem;
+      margin-bottom: var(--space-lg);
+      animation: successBounce 0.6s ease;
+    }
+    
+    @keyframes successBounce {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    .success-container h2 {
+      font-size: 2rem;
+      color: var(--color-success);
+      margin-bottom: var(--space-md);
+    }
+    
+    .success-container p {
+      font-size: 1.1rem;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .success-score {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+      padding: var(--space-md) var(--space-xl);
+      background: var(--color-success-bg);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-success);
+    }
+    
+    .success-details {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+    
+    /* =====================================================
+       TEACHER DASHBOARD
+       ===================================================== */
+    
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    
+    .dashboard-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    
+    .dashboard-title h1 {
+      font-size: 1.75rem;
+      color: var(--color-primary);
+    }
+    
+    .dashboard-actions {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    
+    .dashboard-meta {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-xl);
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+    
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .dashboard-section h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 1rem;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 var(--space-sm);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    
+    .submission-list {
+      max-height: 450px;
+      overflow-y: auto;
+      padding-right: var(--space-sm);
+    }
+    
+    .submission-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .submission-list::-webkit-scrollbar-track {
+      background: var(--color-bg);
+      border-radius: var(--radius-full);
+    }
+    
+    .submission-list::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+    }
+    
+    .submission-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 2px solid transparent;
+    }
+    
+    .submission-item:hover {
+      background: var(--color-bg-alt);
+      transform: translateX(4px);
+    }
+    
+    .submission-item.selected {
+      background: var(--color-info-bg);
+      border-color: var(--color-primary);
+    }
+    
+    .submission-checkbox {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      accent-color: var(--color-primary);
+    }
+    
+    .submission-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .submission-name {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+    
+    .submission-meta {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+    
+    .submission-score {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    
+    .submission-score.pass {
+      color: var(--color-success);
+    }
+    
+    .submission-score.fail {
+      color: var(--color-error);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: var(--space-2xl);
+      color: var(--color-text-muted);
+    }
+    
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+      opacity: 0.5;
+    }
+    
+    /* In Progress Items */
+    .progress-item {
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-warning-bg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      border-left: 4px solid var(--color-warning);
+    }
+    
+    .progress-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .progress-item-name {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    
+    .progress-item-percent {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--color-warning);
+    }
+    
+    .progress-item-time {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .progress-item-bar {
+      height: 6px;
+      background: rgba(0,0,0,0.1);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    
+    .progress-item-fill {
+      height: 100%;
+      background: var(--color-warning);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-base);
+    }
+    
+    /* AI Overview Button */
+    .ai-overview-btn {
+      width: 100%;
+      margin-top: var(--space-lg);
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+    }
+    
+    .ai-overview-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0369a1, #075985);
+    }
+    
+    /* AI Overview Panel */
+    .ai-overview-panel {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 2px solid #7dd3fc;
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin-top: var(--space-xl);
+      position: relative;
+    }
+    
+    .ai-overview-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--space-xl);
+      right: var(--space-xl);
+      height: 4px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #0284c7);
+      border-radius: var(--radius-full);
+    }
+    
+    .ai-overview-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .ai-overview-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .ai-overview-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: #0c4a6e;
+    }
+    
+    .ai-overview-subtitle {
+      font-size: 0.85rem;
+      color: #0369a1;
+    }
+    
+    .ai-overview-summary {
+      padding: var(--space-lg);
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-xl);
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+    }
+    
+    .ai-overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    
+    @media (max-width: 700px) {
+      .ai-overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .ai-overview-section {
+      margin-bottom: var(--space-lg);
+    }
+    
+    .ai-overview-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .ai-overview-section h4 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.9rem;
+      color: #0c4a6e;
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+    }
+    
+    .ai-overview-section ul {
+      list-style: none;
+    }
+    
+    .ai-overview-section li {
+      padding: var(--space-sm) var(--space-md);
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-xs);
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+    }
+    
+    .ai-overview-quote {
+      padding: var(--space-md);
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-sm);
+      font-style: italic;
+      color: var(--color-text-secondary);
+      border-left: 3px solid #0284c7;
+    }
+    
+    /* Detail Panel */
+    .detail-panel {
+      margin-top: var(--space-xl);
+    }
+    
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-light);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .detail-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .detail-meta {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+    
+    .detail-score {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .detail-score.pass {
+      color: var(--color-success);
+    }
+    
+    .detail-score.fail {
+      color: var(--color-error);
+    }
+    
+    .student-comments {
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-lg);
+      border-left: 3px solid var(--color-accent);
+    }
+    
+    .student-comments-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .answer-detail {
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-md);
+    }
+    
+    .answer-question-text {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+    
+    .answer-response {
+      padding: var(--space-md);
+      background: var(--color-surface);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-md);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    .answer-response-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .answer-ai-feedback {
+      padding: var(--space-md);
+      background: var(--color-info-bg);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+    }
+    
+    .answer-ai-score {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+    
+    /* =====================================================
+       LOADING STATES
+       ===================================================== */
+    
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3xl);
+      gap: var(--space-lg);
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .spinner-small {
+      width: 20px;
+      height: 20px;
+      border-width: 2px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+    
+    .grading-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-info-bg);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-lg);
+      border: 1px solid var(--color-info-light);
+    }
+    
+    .grading-indicator .spinner {
+      width: 24px;
+      height: 24px;
+      border-width: 2px;
+      border-top-color: var(--color-info);
+    }
+    
+    .grading-text {
+      color: var(--color-info);
+      font-weight: 500;
+    }
+    
+    /* =====================================================
+       INSTRUCTIONS BOX
+       ===================================================== */
+    
+    .instructions-box {
+      background: var(--color-info-bg);
+      border: 1px solid var(--color-info-light);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      gap: var(--space-md);
+    }
+    
+    .instructions-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    
+    .instructions-text {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+    
+    @media (max-width: 640px) {
+      .app-container {
+        padding: var(--space-md);
+      }
+      
+      .app-header {
+        padding: var(--space-lg);
+      }
+      
+      .app-header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .card {
+        padding: var(--space-lg);
+      }
+      
+      .question-text {
+        font-size: 1.1rem;
+      }
+      
+      .tf-options {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-buttons {
+        flex-direction: column;
+      }
+      
+      .dashboard-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+      
+      .dashboard-actions .btn {
+        flex: 1;
+      }
+      
+      .question-nav {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+      
+      .question-nav .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    // =====================================================
+    // HOMEWORK TEMPLATE v5.0 - PREMIUM EDITION
+    // Full-featured React Application
+    // =====================================================
+    
+    const { useState, useEffect, useCallback, useRef } = React;
+    
+    // =====================================================
+    // CONFIGURATION
+    // =====================================================
+    
+    const CONFIG = {
+      PASS_THRESHOLD: 70,
+      MAX_ATTEMPTS: 3,
+      MAX_SUPPLEMENTARY_ATTEMPTS: 2,
+      TEACHER_PASSWORD: 'teacher123',
+      LOCAL_STORAGE_KEY: 'homework_app_v5',
+      AUTO_SAVE_INTERVAL: 30000,
+      DASHBOARD_REFRESH_INTERVAL: 15000,
+      PROCEED_DELAY: 3000,
+      ...(window.HOMEWORK_CONFIG || {})
+    };
+    
+    const THEME = window.THEME_CONFIG || {};
+    const TASKS = CONFIG.questions || [];
+    
+    // Apply custom theme colors
+    if (THEME.colors) {
+      const root = document.documentElement;
+      const colorMap = {
+        primary: '--color-primary',
+        secondary: '--color-secondary',
+        accent: '--color-accent',
+        background: '--color-bg',
+        surface: '--color-surface',
+        text: '--color-text',
+        success: '--color-success',
+        error: '--color-error',
+        warning: '--color-warning'
+      };
+      Object.entries(THEME.colors).forEach(([key, value]) => {
+        if (colorMap[key]) {
+          root.style.setProperty(colorMap[key], value);
+        }
+      });
+    }
+    
+    // Apply custom fonts
+    if (THEME.fonts) {
+      const root = document.documentElement;
+      if (THEME.fonts.heading) root.style.setProperty('--font-display', THEME.fonts.heading);
+      if (THEME.fonts.body) root.style.setProperty('--font-body', THEME.fonts.body);
+    }
+    
+    // =====================================================
+    // UTILITY FUNCTIONS
+    // =====================================================
+    
+    const shuffleArray = (array) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+    
+    const formatDateTime = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    };
+    
+    const getTimeAgo = (dateString) => {
+      const now = new Date();
+      const then = new Date(dateString);
+      const diffMs = now - then;
+      const diffMins = Math.floor(diffMs / 60000);
+      
+      if (diffMins < 1) return 'Just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+      return `${Math.floor(diffMins / 1440)}d ago`;
+    };
+    
+    const calculateScore = (questionStates, tasks) => {
+      let earnedPoints = 0;
+      let totalPoints = 0;
+      
+      tasks.forEach(task => {
+        totalPoints += task.points;
+        const state = questionStates[task.id];
+        
+        if (state?.isCorrect) {
+          earnedPoints += task.points;
+        } else if (state?.aiGrading?.score !== undefined) {
+          earnedPoints += Math.round((state.aiGrading.score / 100) * task.points);
+        }
+      });
+      
+      return {
+        earned: earnedPoints,
+        total: totalPoints,
+        percentage: totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0
+      };
+    };
+    
+    // =====================================================
+    // API FUNCTIONS
+    // =====================================================
+    
+    const saveProgressToServer = async (studentName, questionStates, currentQuestion, answers) => {
+      if (!studentName) return;
+      
+      const completedCount = Object.values(questionStates).filter(s => s.complete).length;
+      const percentComplete = Math.round((completedCount / TASKS.length) * 100);
+      
+      const progressData = {
+        studentName,
+        percentComplete,
+        currentQuestion,
+        totalQuestions: TASKS.length,
+        questionStates,
+        answers,
+        lastUpdate: new Date().toISOString()
+      };
+      
+      // Save to localStorage as backup
+      try {
+        const key = `${CONFIG.LOCAL_STORAGE_KEY}_progress_${studentName}`;
+        localStorage.setItem(key, JSON.stringify(progressData));
+      } catch (e) {
+        console.warn('localStorage save failed:', e);
+      }
+      
+      // Save to server
+      try {
+        await fetch('/.netlify/functions/save-progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(progressData)
+        });
+      } catch (e) {
+        console.warn('Server progress save failed:', e);
+      }
+    };
+    
+    const loadProgressFromStorage = (studentName) => {
+      try {
+        const key = `${CONFIG.LOCAL_STORAGE_KEY}_progress_${studentName}`;
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          return JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn('Failed to load progress:', e);
+      }
+      return null;
+    };
+    
+    const gradeTextAnswer = async (question, studentAnswer, correctAnswer) => {
+      try {
+        const response = await fetch('/.netlify/functions/grade-text-answer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            studentAnswer,
+            correctAnswer
+          })
+        });
+        
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch (e) {
+        console.error('Grading error:', e);
+      }
+      
+      return {
+        score: 0,
+        isCorrect: false,
+        feedback: 'Unable to grade your response. Please try again.',
+        goodPoints: [],
+        missedPoints: [],
+        improvements: ''
+      };
+    };
+    
+    // =====================================================
+    // QUESTION COMPONENTS
+    // =====================================================
+    
+    function MultipleChoiceQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [shuffledOptions, setShuffledOptions] = useState([]);
+      const [lastTaskId, setLastTaskId] = useState(null);
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          const indexed = task.options.map((text, originalIndex) => ({
+            text,
+            originalIndex
+          }));
+          setShuffledOptions(shuffleArray(indexed));
+          setLastTaskId(task.id);
+        }
+      }, [task.id, task.options, lastTaskId]);
+      
+      if (shuffledOptions.length === 0) return null;
+      
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      
+      const handleSelect = (originalIndex) => {
+        if (!submitted) {
+          setAnswer({ selected: originalIndex });
+        }
+      };
+      
+      return (
+        <div className="options-list">
+          {shuffledOptions.map((option, displayIndex) => {
+            const isSelected = answer?.selected === option.originalIndex;
+            const isCorrectAnswer = option.originalIndex === task.correctAnswer;
+            
+            let className = 'option-button';
+            if (isSelected) className += ' selected';
+            if (submitted) {
+              className += ' disabled';
+              if (showCorrect) {
+                if (isCorrectAnswer) className += ' correct';
+                else if (isSelected && !isCorrectAnswer) className += ' incorrect';
+              }
+            }
+            
+            return (
+              <button
+                key={displayIndex}
+                className={className}
+                onClick={() => handleSelect(option.originalIndex)}
+                disabled={submitted}
+                type="button"
+              >
+                <span className="option-letter">{letters[displayIndex]}</span>
+                <span className="option-text">{option.text}</span>
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+    
+    function TrueFalseQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const handleSelect = (value) => {
+        if (!submitted) {
+          setAnswer({ selected: value });
+        }
+      };
+      
+      const getClassName = (value) => {
+        let className = 'option-button tf-button';
+        const isSelected = answer?.selected === value;
+        const isCorrect = value === task.correctAnswer;
+        
+        if (isSelected) className += ' selected';
+        if (submitted) {
+          className += ' disabled';
+          if (showCorrect) {
+            if (isCorrect) className += ' correct';
+            else if (isSelected && !isCorrect) className += ' incorrect';
+          }
+        }
+        
+        return className;
+      };
+      
+      return (
+        <div className="tf-options">
+          <button
+            className={getClassName(true)}
+            onClick={() => handleSelect(true)}
+            disabled={submitted}
+            type="button"
+          >
+            <span className="option-letter">✓</span>
+            <span className="option-text">True</span>
+          </button>
+          <button
+            className={getClassName(false)}
+            onClick={() => handleSelect(false)}
+            disabled={submitted}
+            type="button"
+          >
+            <span className="option-letter">✗</span>
+            <span className="option-text">False</span>
+          </button>
+        </div>
+      );
+    }
+    
+    function FreeTextQuestion({ task, answer, setAnswer, submitted }) {
+      const [pasteAttempted, setPasteAttempted] = useState(false);
+      const textareaRef = useRef(null);
+      
+      const handlePaste = (e) => {
+        e.preventDefault();
+        setPasteAttempted(true);
+        setTimeout(() => setPasteAttempted(false), 4000);
+      };
+      
+      const handleKeyDown = (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
+          e.preventDefault();
+          setPasteAttempted(true);
+          setTimeout(() => setPasteAttempted(false), 4000);
+        }
+      };
+      
+      const handleDrop = (e) => {
+        e.preventDefault();
+        setPasteAttempted(true);
+        setTimeout(() => setPasteAttempted(false), 4000);
+      };
+      
+      const text = answer?.text || '';
+      const minLength = 10;
+      
+      return (
+        <div className="free-text-container">
+          <textarea
+            ref={textareaRef}
+            className="free-text-input"
+            value={text}
+            onChange={(e) => setAnswer({ text: e.target.value })}
+            onPaste={handlePaste}
+            onKeyDown={handleKeyDown}
+            onDrop={handleDrop}
+            placeholder="Type your answer here... (minimum 10 characters)"
+            disabled={submitted}
+          />
+          <div className="input-footer">
+            {pasteAttempted && (
+              <div className="paste-warning">
+                <span>⚠️</span>
+                <span>Pasting is disabled. Please type your own answer to demonstrate understanding.</span>
+              </div>
+            )}
+            <div className="char-count" style={{ marginLeft: 'auto' }}>
+              {text.length} characters {text.length < minLength && !submitted && `(${minLength - text.length} more needed)`}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // SUPPLEMENTARY QUESTION COMPONENT
+    // =====================================================
+    
+    function SupplementaryQuestion({
+      task,
+      suppTask,
+      answer,
+      setAnswer,
+      submitted,
+      onSubmit,
+      attempts,
+      suppCorrect,
+      isComplete,
+      savedAnswer,
+      canProceed
+    }) {
+      const canSubmit = () => {
+        if (!answer) return false;
+        if (suppTask.type === 'multiple-choice' || suppTask.type === 'true-false') {
+          return answer.selected !== undefined;
+        }
+        return answer.text && answer.text.trim().length > 0;
+      };
+      
+      const displayAnswer = savedAnswer || answer;
+      const showFeedback = submitted || isComplete;
+      const maxAttempts = CONFIG.MAX_SUPPLEMENTARY_ATTEMPTS;
+      
+      const getAnswerText = () => {
+        if (!displayAnswer) return 'N/A';
+        if (suppTask.type === 'multiple-choice') {
+          return suppTask.options[displayAnswer.selected];
+        }
+        if (suppTask.type === 'true-false') {
+          return displayAnswer.selected ? 'True' : 'False';
+        }
+        return displayAnswer.text || 'N/A';
+      };
+      
+      const getCorrectAnswerText = () => {
+        if (suppTask.type === 'multiple-choice') {
+          return suppTask.options[suppTask.correctAnswer];
+        }
+        if (suppTask.type === 'true-false') {
+          return suppTask.correctAnswer ? 'True' : 'False';
+        }
+        return suppTask.correctAnswer;
+      };
+      
+      return (
+        <div className={`supplementary-box ${isComplete ? 'complete' : ''}`}>
+          <div className="supplementary-header">
+            <span className="supplementary-badge">
+              <span>📝</span>
+              <span>Follow-up Question</span>
+            </span>
+            <span className="supplementary-title">
+              {isComplete ? '✓ Completed' : `Attempt ${attempts + 1} of ${maxAttempts}`}
+            </span>
+          </div>
+          
+          <p className="supplementary-question">{suppTask.question}</p>
+          
+          {/* Show input controls only when not complete */}
+          {!isComplete && suppTask.type === 'multiple-choice' && (
+            <MultipleChoiceQuestion
+              task={suppTask}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={submitted}
+              showCorrect={showFeedback}
+            />
+          )}
+          
+          {!isComplete && suppTask.type === 'true-false' && (
+            <TrueFalseQuestion
+              task={suppTask}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={submitted}
+              showCorrect={showFeedback}
+            />
+          )}
+          
+          {/* Show saved answer when complete */}
+          {isComplete && displayAnswer && (
+            <div className="saved-answer-display">
+              <div className="saved-answer-label">Your Answer</div>
+              <div className="saved-answer-text">{getAnswerText()}</div>
+            </div>
+          )}
+          
+          {/* Feedback */}
+          {showFeedback && (
+            <div className={`feedback-box ${suppCorrect ? 'feedback-correct' : 'feedback-incorrect'}`}>
+              <div className="feedback-header">
+                <span className="feedback-icon">{suppCorrect ? '✅' : '❌'}</span>
+                <span className="feedback-title">{suppCorrect ? 'Correct!' : 'Not quite right'}</span>
+              </div>
+              <p className="feedback-explanation">{suppTask.explanation}</p>
+              
+              {!suppCorrect && isComplete && (
+                <div className="correct-answer-reveal">
+                  <div className="correct-answer-label">Correct Answer</div>
+                  <div className="correct-answer-text">{getCorrectAnswerText()}</div>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Submit button */}
+          {!submitted && !isComplete && (
+            <button
+              className="btn btn-primary"
+              onClick={onSubmit}
+              disabled={!canSubmit()}
+              style={{ marginTop: 'var(--space-lg)' }}
+            >
+              Submit Answer
+            </button>
+          )}
+          
+          {/* Proceed status */}
+          {isComplete && (
+            <div className={`proceed-status ${canProceed ? 'proceed-ready' : 'proceed-waiting'}`}>
+              {canProceed === false ? (
+                <>
+                  <span className="spinner spinner-small"></span>
+                  <span>Please review the feedback... You can proceed shortly.</span>
+                </>
+              ) : (
+                <>
+                  <span>✓</span>
+                  <span>Follow-up complete — you may now proceed</span>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
+⚠️ Score Below 50%</h3>
+              <p>Your response needs more detail. Please revise and resubmit your answer.</p>
+            </div>
+          )}
+          
+          {/* Supplementary Question */}
+          {((state.needsSupplementary && state.mainSubmitted && !state.needsRetry) ||
+            state.showCompletedFeedback) && task.supplementary && (
+            <SupplementaryQuestion
+              task={task}
+              suppTask={task.supplementary}
+              answer={suppAnswer}
+              setAnswer={setSuppAnswer}
+              submitted={state.suppSubmitted}
+              onSubmit={onSuppSubmit}
+              attempts={state.suppAttempts || 0}
+              suppCorrect={state.suppCorrect}
+              isComplete={state.supplementaryComplete}
+              savedAnswer={state.suppAnswerSaved}
+              canProceed={state.canProceedAfterSupp}
+            />
+          )}
+          
+          {/* Navigation */}
+          <div className="question-nav">
+            <button
+              className="btn btn-secondary"
+              onClick={onPrev}
+              disabled={isFirst}
+            >
+              ← Previous
+            </button>
+            
+            {!state.mainSubmitted || state.needsRetry ? (
+              <button
+                className="btn btn-primary btn-large"
+                onClick={state.needsRetry ? handleRetry : handleMainSubmit}
+                disabled={state.needsRetry ? false : (!canSubmitMain() || isGrading)}
+              >
+                {isGrading ? (
+                  <>
+                    <span className="spinner spinner-small"></span>
+                    <span>Grading...</span>
+                  </>
+                ) : state.needsRetry ? (
+                  'Revise Answer'
+                ) : (
+                  'Submit Answer'
+                )}
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary btn-large"
+                onClick={onNext}
+                disabled={!canProceed()}
+              >
+                {isLast ? 'Review Answers →' : 'Next Question →'}
+              </button>
+            )}
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // ENTRY / LOGIN SCREENS
+    // =====================================================
+    
+    function EntryScreen({ onStudentStart, onTeacherLogin }) {
+      const [name, setName] = useState('');
+      const [error, setError] = useState('');
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const trimmedName = name.trim();
+        
+        if (trimmedName.length < 2) {
+          setError('Please enter your full name (at least 2 characters)');
+          return;
+        }
+        
+        // Check for saved progress
+        const savedProgress = loadProgressFromStorage(trimmedName);
+        onStudentStart(trimmedName, savedProgress);
+      };
+      
+      return (
+        <div className="login-container">
+          <div className="card login-card">
+            <div className="login-icon">📚</div>
+            
+            <h2>{CONFIG.title || 'Interactive Homework'}</h2>
+            <p className="login-subtitle">
+              {CONFIG.subject}
+              {CONFIG.yearGroup && ` • ${CONFIG.yearGroup}`}
+            </p>
+            
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Your Name</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => { setName(e.target.value); setError(''); }}
+                  autoFocus
+                />
+              </div>
+              
+              {error && (
+                <div className="error-message">
+                  <span>⚠️</span>
+                  <span>{error}</span>
+                </div>
+              )}
+              
+              <button type="submit" className="btn btn-primary btn-large" style={{ width: '100%' }}>
+                Start Homework
+              </button>
+            </form>
+            
+            <div className="login-divider">or</div>
+            
+            <button
+              className="btn btn-secondary"
+              style={{ width: '100%' }}
+              onClick={onTeacherLogin}
+            >
+              🔐 Teacher Login
+            </button>
+          </div>
+        </div>
+      );
+    }
+    
+    function TeacherLoginScreen({ onLogin, onBack }) {
+      const [password, setPassword] = useState('');
+      const [error, setError] = useState('');
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const correctPassword = CONFIG.teacherPassword || CONFIG.TEACHER_PASSWORD || 'teacher123';
+        
+        if (password === correctPassword) {
+          onLogin();
+        } else {
+          setError('Incorrect password');
+          setPassword('');
+        }
+      };
+      
+      return (
+        <div className="login-container">
+          <div className="card login-card">
+            <div className="login-icon">👩‍🏫</div>
+            
+            <h2>Teacher Dashboard</h2>
+            <p className="login-subtitle">Access student submissions and analytics</p>
+            
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  className="form-input"
+                  placeholder="Enter teacher password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setError(''); }}
+                  autoFocus
+                />
+              </div>
+              
+              {error && (
+                <div className="error-message">
+                  <span>⚠️</span>
+                  <span>{error}</span>
+                </div>
+              )}
+              
+              <button type="submit" className="btn btn-primary btn-large" style={{ width: '100%' }}>
+                Access Dashboard
+              </button>
+            </form>
+            
+            <div className="login-divider">or</div>
+            
+            <button
+              className="btn btn-secondary"
+              style={{ width: '100%' }}
+              onClick={onBack}
+            >
+              ← Back to Student Login
+            </button>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // REVIEW SCREEN
+    // =====================================================
+    
+    function ReviewScreen({ questionStates, answers, onSubmit, onBack }) {
+      const score = calculateScore(questionStates, TASKS);
+      
+      const getStatus = (task) => {
+        const state = questionStates[task.id];
+        if (!state) return { icon: '⏳', className: 'incomplete', label: 'Not answered' };
+        if (state.isCorrect) return { icon: '✅', className: 'correct', label: 'Correct' };
+        if (state.aiGrading?.score >= 70) return { icon: '✅', className: 'correct', label: `${state.aiGrading.score}%` };
+        if (state.aiGrading?.score >= 50) return { icon: '⚡', className: 'partial', label: `${state.aiGrading.score}%` };
+        return { icon: '❌', className: 'incorrect', label: state.aiGrading ? `${state.aiGrading.score}%` : 'Incorrect' };
+      };
+      
+      return (
+        <div className="card">
+          <div className="review-header">
+            <h2>Review Your Answers</h2>
+            <p style={{ color: 'var(--color-text-muted)' }}>
+              Check your responses before final submission
+            </p>
+          </div>
+          
+          <div className="review-list">
+            {TASKS.map((task, index) => {
+              const status = getStatus(task);
+              return (
+                <div key={task.id} className="review-item">
+                  <div className={`review-status ${status.className}`}>
+                    {status.icon}
+                  </div>
+                  <div className="review-content">
+                    <div className="review-question">
+                      Q{index + 1}: {task.question.length > 60 ? task.question.substring(0, 60) + '...' : task.question}
+                    </div>
+                    <div className="review-score">{status.label}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          <div className="review-actions">
+            <button className="btn btn-secondary" onClick={onBack}>
+              ← Back to Questions
+            </button>
+            <button className="btn btn-success" onClick={() => onSubmit(score)}>
+              Continue to Submit ({score.percentage}%)
+            </button>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // SUBMISSION FORM
+    // =====================================================
+    
+    function SubmissionForm({ submission, onSubmitSuccess, onBack }) {
+      const [comments, setComments] = useState('');
+      const [confirmed, setConfirmed] = useState(false);
+      const [submitting, setSubmitting] = useState(false);
+      const [error, setError] = useState(null);
+      
+      const passThreshold = CONFIG.passThreshold || CONFIG.PASS_THRESHOLD || 70;
+      const passed = submission.score >= passThreshold;
+      
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!confirmed) {
+          setError('Please confirm that this is your own work');
+          return;
+        }
+        
+        setSubmitting(true);
+        setError(null);
+        
+        const fullSubmission = {
+          ...submission,
+          studentComments: comments,
+          confirmedOwnWork: confirmed,
+          submittedAt: new Date().toISOString()
+        };
+        
+        try {
+          const response = await fetch('/.netlify/functions/submit-homework', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fullSubmission)
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok && result.success) {
+            // Clean up local progress
+            try {
+              const key = `${CONFIG.LOCAL_STORAGE_KEY}_progress_${submission.studentName}`;
+              localStorage.removeItem(key);
+              
+              await fetch('/.netlify/functions/save-progress', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  studentName: submission.studentName,
+                  percentComplete: 100,
+                  completed: true
+                })
+              });
+            } catch (cleanupError) {
+              console.log('Cleanup note:', cleanupError);
+            }
+            
+            onSubmitSuccess({ ...fullSubmission, submissionId: result.submissionId });
+          } else {
+            setError(result.error || 'Submission failed. Please try again.');
+          }
+        } catch (err) {
+          console.error('Submission error:', err);
+          setError('Network error. Please check your connection and try again.');
+        } finally {
+          setSubmitting(false);
+        }
+      };
+      
+      return (
+        <div className="submission-container">
+          <div className={`score-display ${passed ? 'pass' : 'fail'}`}>
+            <div className="score-value">{submission.score}%</div>
+            <div className="score-label">
+              {submission.earnedPoints} / {submission.totalPoints} points
+            </div>
+            <div className="score-status">
+              {passed ? '✓ Passed' : '✗ Below threshold'}
+            </div>
+          </div>
+          
+          <div className="card">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Comments for your teacher (optional)</label>
+                <textarea
+                  className="free-text-input"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  placeholder="Any comments about this homework, difficulties you faced, or questions..."
+                  rows={3}
+                  style={{ minHeight: '100px' }}
+                />
+              </div>
+              
+              <div className="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="confirm-own-work"
+                  checked={confirmed}
+                  onChange={(e) => setConfirmed(e.target.checked)}
+                />
+                <label htmlFor="confirm-own-work">
+                  I confirm that this homework is my own work and I have not copied answers from other sources or used AI to generate my responses.
+                </label>
+              </div>
+              
+              {error && (
+                <div className="error-message">
+                  <span>⚠️</span>
+                  <span>{error}</span>
+                </div>
+              )}
+              
+              <div className="form-buttons">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={onBack}
+                  disabled={submitting}
+                >
+                  ← Back to Review
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  disabled={submitting || !confirmed}
+                >
+                  {submitting ? (
+                    <>
+                      <span className="spinner spinner-small"></span>
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    '✓ Submit Homework'
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // SUCCESS SCREEN
+    // =====================================================
+    
+    function SuccessScreen({ submission }) {
+      return (
+        <div className="card">
+          <div className="success-container">
+            <div className="success-icon">🎉</div>
+            <h2>Homework Submitted!</h2>
+            <p>Excellent work, {submission.studentName}!</p>
+            
+            <div className="success-score">
+              <span>🏆</span>
+              <span>Final Score: {submission.score}%</span>
+            </div>
+            
+            <div className="success-details">
+              <p>Submitted at {formatDateTime(submission.submittedAt)}</p>
+              <p style={{ marginTop: 'var(--space-sm)' }}>
+                Your teacher will review your submission. You can now close this page.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // TEACHER DASHBOARD
+    // =====================================================
+    
+    function TeacherDashboard({ onLogout }) {
+      const [submissions, setSubmissions] = useState([]);
+      const [inProgress, setInProgress] = useState([]);
+      const [selectedSubmission, setSelectedSubmission] = useState(null);
+      const [checkedSubmissions, setCheckedSubmissions] = useState([]);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+      const [lastRefresh, setLastRefresh] = useState(new Date());
+      const [aiOverview, setAiOverview] = useState(null);
+      const [loadingOverview, setLoadingOverview] = useState(false);
+      
+      const teacherPassword = CONFIG.teacherPassword || CONFIG.TEACHER_PASSWORD || 'teacher123';
+      const passThreshold = CONFIG.passThreshold || CONFIG.PASS_THRESHOLD || 70;
+      
+      const loadData = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        
+        try {
+          // Fetch completed submissions
+          const submissionsRes = await fetch(
+            `/.netlify/functions/get-submissions?auth=${encodeURIComponent(teacherPassword)}`
+          );
+          
+          if (submissionsRes.ok) {
+            const data = await submissionsRes.json();
+            setSubmissions(data.submissions || []);
+          } else {
+            console.warn('Failed to fetch submissions');
+          }
+          
+          // Fetch in-progress students
+          const progressRes = await fetch(
+            `/.netlify/functions/save-progress?auth=${encodeURIComponent(teacherPassword)}`
+          );
+          
+          if (progressRes.ok) {
+            const data = await progressRes.json();
+            setInProgress(data.inProgress || []);
+          }
+        } catch (err) {
+          console.error('Error loading data:', err);
+          setError('Failed to load data from server');
+        } finally {
+          setLoading(false);
+          setLastRefresh(new Date());
+        }
+      }, [teacherPassword]);
+      
+      useEffect(() => {
+        loadData();
+        const interval = setInterval(loadData, CONFIG.DASHBOARD_REFRESH_INTERVAL);
+        return () => clearInterval(interval);
+      }, [loadData]);
+      
+      const toggleSubmissionCheck = (sub) => {
+        setCheckedSubmissions(prev => {
+          const exists = prev.find(s => s.id === sub.id);
+          if (exists) {
+            return prev.filter(s => s.id !== sub.id);
+          }
+          return [...prev, sub];
+        });
+      };
+      
+      const generateAIOverview = async () => {
+        if (checkedSubmissions.length === 0) return;
+        
+        setLoadingOverview(true);
+        setAiOverview(null);
+        
+        try {
+          const response = await fetch('/.netlify/functions/analyze-student-responses', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ submissions: checkedSubmissions })
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            setAiOverview(data);
+          } else {
+            const errorData = await response.json();
+            setError(errorData.message || 'Failed to generate AI overview');
+          }
+        } catch (err) {
+          console.error('AI overview error:', err);
+          setError('Failed to generate AI overview');
+        } finally {
+          setLoadingOverview(false);
+        }
+      };
+      
+      if (loading && submissions.length === 0) {
+        return (
+          <div className="app-container dashboard-container">
+            <div className="loading-container">
+              <span className="spinner"></span>
+              <span className="loading-text">Loading dashboard...</span>
+            </div>
+          </div>
+        );
+      }
+      
+      return (
+        <div className="app-container dashboard-container">
+          {/* Header */}
+          <div className="dashboard-header">
+            <div className="dashboard-title">
+              <span style={{ fontSize: '1.5rem' }}>📊</span>
+              <h1>Teacher Dashboard</h1>
+            </div>
+            <div className="dashboard-actions">
+              <button className="btn btn-secondary" onClick={loadData}>
+                🔄 Refresh
+              </button>
+              <button className="btn btn-secondary" onClick={onLogout}>
+                Logout
+              </button>
+            </div>
+          </div>
+          
+          <p className="dashboard-meta">
+            Last updated: {formatDateTime(lastRefresh)} • Auto-refreshes every {CONFIG.DASHBOARD_REFRESH_INTERVAL / 1000}s
+          </p>
+          
+          {error && (
+            <div className="error-message" style={{ marginBottom: 'var(--space-lg)' }}>
+              <span>⚠️</span>
+              <span>{error}</span>
+            </div>
+          )}
+          
+          {/* Main Grid */}
+          <div className="dashboard-grid">
+            {/* Completed Submissions */}
+            <div className="card dashboard-section">
+              <h3>
+                <span>✅ Completed Submissions</span>
+                <span className="count-badge">{submissions.length}</span>
+              </h3>
+              
+              <div className="submission-list">
+                {submissions.length === 0 ? (
+                  <div className="empty-state">
+                    <div className="empty-state-icon">📭</div>
+                    <p>No submissions yet</p>
+                  </div>
+                ) : (
+                  submissions.map(sub => {
+                    const isChecked = checkedSubmissions.find(s => s.id === sub.id);
+                    const isSelected = selectedSubmission?.id === sub.id;
+                    const passed = sub.score >= passThreshold;
+                    
+                    return (
+                      <div
+                        key={sub.id}
+                        className={`submission-item ${isSelected ? 'selected' : ''}`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="submission-checkbox"
+                          checked={!!isChecked}
+                          onChange={() => toggleSubmissionCheck(sub)}
+                        />
+                        <div
+                          className="submission-info"
+                          onClick={() => setSelectedSubmission(sub)}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <div className="submission-name">{sub.studentName}</div>
+                          <div className="submission-meta">
+                            {formatDateTime(sub.submittedAt || sub.serverTimestamp)}
+                          </div>
+                        </div>
+                        <div className={`submission-score ${passed ? 'pass' : 'fail'}`}>
+                          {sub.score}%
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+              
+              {submissions.length > 0 && (
+                <button
+                  className="btn btn-primary ai-overview-btn"
+                  onClick={generateAIOverview}
+                  disabled={checkedSubmissions.length === 0 || loadingOverview}
+                >
+                  {loadingOverview ? (
+                    <>
+                      <span className="spinner spinner-small"></span>
+                      <span>Analyzing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🤖</span>
+                      <span>AI Overview ({checkedSubmissions.length} selected)</span>
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+            
+            {/* In Progress */}
+            <div className="card dashboard-section">
+              <h3>
+                <span>⏳ Currently Working</span>
+                <span className="count-badge">{inProgress.length}</span>
+              </h3>
+              
+              {inProgress.length === 0 ? (
+                <div className="empty-state">
+                  <div className="empty-state-icon">🎯</div>
+                  <p>No students currently working</p>
+                </div>
+              ) : (
+                inProgress.map((prog, idx) => (
+                  <div key={idx} className="progress-item">
+                    <div className="progress-item-header">
+                      <span className="progress-item-name">{prog.studentName}</span>
+                      <span className="progress-item-percent">{prog.percentComplete}%</span>
+                    </div>
+                    <div className="progress-item-time">
+                      Last activity: {getTimeAgo(prog.lastUpdate)}
+                    </div>
+                    <div className="progress-item-bar">
+                      <div
+                        className="progress-item-fill"
+                        style={{ width: `${prog.percentComplete}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+          
+          {/* AI Overview Panel */}
+          {aiOverview && (
+            <div className="ai-overview-panel">
+              <div className="ai-overview-header">
+                <div className="ai-overview-icon">🤖</div>
+                <div>
+                  <div className="ai-overview-title">AI Class Analysis</div>
+                  <div className="ai-overview-subtitle">
+                    Based on {checkedSubmissions.length} student submission{checkedSubmissions.length !== 1 ? 's' : ''}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="ai-overview-summary">
+                {aiOverview.summary}
+              </div>
+              
+              <div className="ai-overview-grid">
+                <div className="ai-overview-section">
+                  <h4>💪 Common Strengths</h4>
+                  <ul>
+                    {aiOverview.commonStrengths?.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="ai-overview-section">
+                  <h4>⚠️ Common Misconceptions</h4>
+                  <ul>
+                    {aiOverview.commonMisconceptions?.map((m, i) => (
+                      <li key={i}>{m}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              {aiOverview.representativeGoodExample && (
+                <div className="ai-overview-section">
+                  <h4>✨ Example of Good Response</h4>
+                  <div className="ai-overview-quote">
+                    "{aiOverview.representativeGoodExample}"
+                  </div>
+                </div>
+              )}
+              
+              {aiOverview.representativeMisconceptionExample && (
+                <div className="ai-overview-section">
+                  <h4>📝 Typical Error Pattern</h4>
+                  <div className="ai-overview-quote">
+                    {aiOverview.representativeMisconceptionExample}
+                  </div>
+                </div>
+              )}
+              
+              <div className="ai-overview-section">
+                <h4>📚 Teaching Suggestions</h4>
+                <ul>
+                  {aiOverview.teachingSuggestions?.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          
+          {/* Submission Detail Panel */}
+          {selectedSubmission && (
+            <div className="card detail-panel">
+              <div className="detail-header">
+                <div>
+                  <h3 className="detail-title">{selectedSubmission.studentName}</h3>
+                  <p className="detail-meta">
+                    Submitted: {formatDateTime(selectedSubmission.submittedAt || selectedSubmission.serverTimestamp)}
+                  </p>
+                </div>
+                <div className={`detail-score ${selectedSubmission.score >= passThreshold ? 'pass' : 'fail'}`}>
+                  {selectedSubmission.score}%
+                </div>
+              </div>
+              
+              {selectedSubmission.studentComments && (
+                <div className="student-comments">
+                  <div className="student-comments-label">Student Comments</div>
+                  <p>{selectedSubmission.studentComments}</p>
+                </div>
+              )}
+              
+              <h4 style={{ marginBottom: 'var(--space-md)' }}>Answers</h4>
+              
+              {TASKS.map((task, idx) => {
+                const answer = selectedSubmission.answers?.[task.id];
+                const state = selectedSubmission.questionStates?.[task.id];
+                
+                const getAnswerText = () => {
+                  if (!answer) return 'No answer';
+                  if (answer.text) return answer.text;
+                  if (answer.selected !== undefined) {
+                    if (task.type === 'multiple-choice') {
+                      return task.options[answer.selected] || 'N/A';
+                    }
+                    return answer.selected ? 'True' : 'False';
+                  }
+                  return 'N/A';
+                };
+                
+                return (
+                  <div key={task.id} className="answer-detail">
+                    <div className="answer-question-text">
+                      Q{idx + 1}: {task.question}
+                    </div>
+                    <div className="answer-response">
+                      <div className="answer-response-label">Student's Answer</div>
+                      <p>{getAnswerText()}</p>
+                    </div>
+                    {state?.aiGrading && (
+                      <div className="answer-ai-feedback">
+                        <div className="answer-ai-score">
+                          AI Score: {state.aiGrading.score}%
+                        </div>
+                        <p>{state.aiGrading.feedback}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              
+              <button
+                className="btn btn-secondary"
+                onClick={() => setSelectedSubmission(null)}
+                style={{ marginTop: 'var(--space-lg)' }}
+              >
+                Close Details
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // MAIN APP
+    // =====================================================
+    
+    function App() {
+      const [screen, setScreen] = useState('entry');
+      const [studentName, setStudentName] = useState('');
+      const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [suppAnswers, setSuppAnswers] = useState({});
+      const [questionStates, setQuestionStates] = useState({});
+      const [submission, setSubmission] = useState(null);
+      
+      // Handle URL hash for direct teacher access
+      useEffect(() => {
+        const handleHash = () => {
+          if (window.location.hash === '#teacher') {
+            setScreen('teacher-login');
+          }
+        };
+        handleHash();
+        window.addEventListener('hashchange', handleHash);
+        return () => window.removeEventListener('hashchange', handleHash);
+      }, []);
+      
+      // Save progress on state changes
+      useEffect(() => {
+        if (studentName && Object.keys(questionStates).length > 0) {
+          saveProgressToServer(studentName, questionStates, currentQuestionIndex, answers);
+        }
+      }, [questionStates, currentQuestionIndex, studentName, answers]);
+      
+      // Current task
+      const currentTask = TASKS[currentQuestionIndex];
+      const currentState = questionStates[currentTask?.id] || {};
+      
+      // Handle student start
+      const handleStudentStart = (name, savedProgress) => {
+        setStudentName(name);
+        
+        if (savedProgress) {
+          setQuestionStates(savedProgress.questionStates || {});
+          setAnswers(savedProgress.answers || {});
+          setCurrentQuestionIndex(Math.min(
+            savedProgress.currentQuestion || 0,
+            TASKS.length - 1
+          ));
+        }
+        
+        setScreen('homework');
+      };
+      
+      // Handle main question submission
+      const handleMainSubmit = async () => {
+        const task = currentTask;
+        const answer = answers[task.id];
+        
+        let isCorrect = false;
+        let feedback = task.explanation;
+        let aiGrading = null;
+        
+        if (task.type === 'multiple-choice') {
+          isCorrect = answer?.selected === task.correctAnswer;
+        } else if (task.type === 'true-false') {
+          isCorrect = answer?.selected === task.correctAnswer;
+        } else if (task.type === 'free-text') {
+          aiGrading = await gradeTextAnswer(task.question, answer?.text || '', task.correctAnswer);
+          isCorrect = aiGrading.isCorrect || aiGrading.score >= 70;
+          feedback = aiGrading.feedback;
+        }
+        
+        const needsRetry = task.type === 'free-text' && aiGrading?.score < 50;
+        const needsSupplementary = !isCorrect && !needsRetry && task.supplementary;
+        
+        const newState = {
+          mainSubmitted: true,
+          isCorrect,
+          feedback,
+          aiGrading,
+          needsRetry,
+          needsSupplementary,
+          complete: isCorrect && !task.supplementary,
+          attempts: (currentState.attempts || 0) + 1
+        };
+        
+        setQuestionStates(prev => ({
+          ...prev,
+          [task.id]: newState
+        }));
+      };
+      
+      // Handle supplementary question submission
+      const handleSuppSubmit = () => {
+        const task = currentTask;
+        const suppTask = task.supplementary;
+        const suppAnswer = suppAnswers[task.id];
+        const state = questionStates[task.id];
+        
+        let correct = false;
+        if (suppTask.type === 'multiple-choice') {
+          correct = suppAnswer?.selected === suppTask.correctAnswer;
+        } else if (suppTask.type === 'true-false') {
+          correct = suppAnswer?.selected === suppTask.correctAnswer;
+        }
+        
+        const newSuppAttempts = (state.suppAttempts || 0) + 1;
+        const maxAttempts = CONFIG.MAX_SUPPLEMENTARY_ATTEMPTS;
+        
+        if (correct || newSuppAttempts >= maxAttempts) {
+          // Completed - show feedback permanently
+          const newState = {
+            ...state,
+            needsSupplementary: true,
+            suppAttempts: newSuppAttempts,
+            suppSubmitted: true,
+            suppCorrect: correct,
+            suppAnswerSaved: suppAnswer,
+            supplementaryComplete: true,
+            complete: true,
+            canProceedAfterSupp: false,
+            showCompletedFeedback: true
+          };
+          
+          setQuestionStates(prev => ({
+            ...prev,
+            [task.id]: newState
+          }));
+          
+          // Allow proceeding after delay
+          setTimeout(() => {
+            setQuestionStates(prev => ({
+              ...prev,
+              [task.id]: {
+                ...prev[task.id],
+                canProceedAfterSupp: true
+              }
+            }));
+          }, CONFIG.PROCEED_DELAY);
+        } else {
+          // Incorrect but can retry
+          const newState = {
+            ...state,
+            needsSupplementary: true,
+            suppAttempts: newSuppAttempts,
+            suppSubmitted: true,
+            suppCorrect: false,
+            suppAnswerSaved: suppAnswer
+          };
+          
+          setQuestionStates(prev => ({
+            ...prev,
+            [task.id]: newState
+          }));
+          
+          // Reset for retry after delay
+          setTimeout(() => {
+            setQuestionStates(prev => ({
+              ...prev,
+              [task.id]: {
+                ...prev[task.id],
+                suppSubmitted: false
+              }
+            }));
+            setSuppAnswers(prev => ({
+              ...prev,
+              [task.id]: null
+            }));
+          }, CONFIG.PROCEED_DELAY);
+        }
+      };
+      
+      // Navigation
+      const handleNext = () => {
+        if (currentQuestionIndex < TASKS.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+          setScreen('review');
+        }
+      };
+      
+      const handlePrev = () => {
+        if (currentQuestionIndex > 0) {
+          setCurrentQuestionIndex(currentQuestionIndex - 1);
+        }
+      };
+      
+      // Handle review submission
+      const handleReviewSubmit = (score) => {
+        setSubmission({
+          studentName,
+          answers,
+          questionStates,
+          score: score.percentage,
+          earnedPoints: score.earned,
+          totalPoints: score.total,
+          homeworkTitle: CONFIG.title,
+          homeworkSubject: CONFIG.subject
+        });
+        setScreen('submit');
+      };
+      
+      // Calculate progress
+      const getProgress = () => {
+        const completed = Object.values(questionStates).filter(s => s.complete).length;
+        return {
+          completed,
+          total: TASKS.length,
+          percentage: TASKS.length > 0 ? Math.round((completed / TASKS.length) * 100) : 0
+        };
+      };
+      
+      const progress = getProgress();
+      
+      // =====================================================
+      // RENDER
+      // =====================================================
+      
+      // Entry screen
+      if (screen === 'entry') {
+        return (
+          <div className="app-container">
+            <EntryScreen
+              onStudentStart={handleStudentStart}
+              onTeacherLogin={() => setScreen('teacher-login')}
+            />
+          </div>
+        );
+      }
+      
+      // Teacher login
+      if (screen === 'teacher-login') {
+        return (
+          <div className="app-container">
+            <TeacherLoginScreen
+              onLogin={() => setScreen('dashboard')}
+              onBack={() => {
+                window.location.hash = '';
+                setScreen('entry');
+              }}
+            />
+          </div>
+        );
+      }
+      
+      // Teacher dashboard
+      if (screen === 'dashboard') {
+        return (
+          <TeacherDashboard
+            onLogout={() => {
+              window.location.hash = '';
+              setScreen('entry');
+            }}
+          />
+        );
+      }
+      
+      // Review screen
+      if (screen === 'review') {
+        return (
+          <div className="app-container">
+            <div className="app-header">
+              <h1>{CONFIG.title}</h1>
+              <p className="subtitle">{CONFIG.subject}</p>
+            </div>
+            <ReviewScreen
+              questionStates={questionStates}
+              answers={answers}
+              onSubmit={handleReviewSubmit}
+              onBack={() => setScreen('homework')}
+            />
+          </div>
+        );
+      }
+      
+      // Submission form
+      if (screen === 'submit') {
+        return (
+          <div className="app-container">
+            <div className="app-header">
+              <h1>{CONFIG.title}</h1>
+              <p className="subtitle">{CONFIG.subject}</p>
+            </div>
+            <SubmissionForm
+              submission={submission}
+              onSubmitSuccess={(sub) => {
+                setSubmission(sub);
+                setScreen('success');
+              }}
+              onBack={() => setScreen('review')}
+            />
+          </div>
+        );
+      }
+      
+      // Success screen
+      if (screen === 'success') {
+        return (
+          <div className="app-container">
+            <SuccessScreen submission={submission} />
+          </div>
+        );
+      }
+      
+      // Main homework screen
+      return (
+        <div className="app-container">
+          {/* Header */}
+          <div className="app-header">
+            <h1>{CONFIG.title}</h1>
+            <p className="subtitle">{CONFIG.subject}</p>
+            <div className="header-meta">
+              <span>👤 {studentName}</span>
+              {CONFIG.yearGroup && <span>📚 {CONFIG.yearGroup}</span>}
+            </div>
+          </div>
+          
+          {/* Progress */}
+          <div className="progress-section">
+            <div className="progress-header">
+              <span className="progress-label">Your Progress</span>
+              <span className="progress-stats">
+                {progress.completed} / {progress.total} completed
+              </span>
+            </div>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${progress.percentage}%` }}
+              ></div>
+            </div>
+          </div>
+          
+          {/* Instructions */}
+          {CONFIG.instructions && (
+            <div className="instructions-box">
+              <span className="instructions-icon">📋</span>
+              <p className="instructions-text">{CONFIG.instructions}</p>
+            </div>
+          )}
+          
+          {/* Question Card */}
+          {currentTask && (
+            <QuestionCard
+              task={currentTask}
+              questionNumber={currentQuestionIndex + 1}
+              totalQuestions={TASKS.length}
+              answer={answers[currentTask.id]}
+              setAnswer={(ans) => setAnswers({ ...answers, [currentTask.id]: ans })}
+              suppAnswer={suppAnswers[currentTask.id]}
+              setSuppAnswer={(ans) => setSuppAnswers({ ...suppAnswers, [currentTask.id]: ans })}
+              state={currentState}
+              onMainSubmit={handleMainSubmit}
+              onSuppSubmit={handleSuppSubmit}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              isFirst={currentQuestionIndex === 0}
+              isLast={currentQuestionIndex === TASKS.length - 1}
+            />
+          )}
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // RENDER APP
+    // =====================================================
+    
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
