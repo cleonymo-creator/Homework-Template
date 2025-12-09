@@ -1,4 +1,4 @@
-# HOMEWORK CONTENT GENERATOR PROMPT v5.0
+# HOMEWORK CONTENT GENERATOR PROMPT v6.0
 
 ## Your Task
 
@@ -24,163 +24,269 @@ window.HOMEWORK_CONFIG = {
   
   // Questions Array (5-10 questions recommended)
   questions: [
-    {
-      id: 1,  // Unique number, sequential
-      type: "multiple-choice",  // OR "true-false" OR "free-text"
-      question: "The question text",
-      
-      // For multiple-choice only:
-      options: ["Option A", "Option B", "Option C", "Option D"],
-      correctAnswer: 0,  // Index of correct option (0-based)
-      
-      // For true-false only:
-      // correctAnswer: true,  // or false
-      
-      // For free-text only:
-      // correctAnswer: "Expected answer content for AI grading",
-      
-      explanation: "Explanation shown after answering",
-      points: 10,  // Points for this question
-      
-      // REQUIRED: Supplementary follow-up question
-      supplementary: {
-        type: "multiple-choice",  // or "true-false"
-        question: "Follow-up question if main answer was wrong",
-        options: ["A", "B", "C", "D"],  // For MCQ only
-        correctAnswer: 0,  // Index or boolean
-        explanation: "Explanation for follow-up"
-      }
-    }
-    // ... more questions
+    // See QUESTION TYPES section below for all available types
   ]
 };
 ```
-
-### 2. config/theme.js (OPTIONAL - only if custom styling requested)
-
-```javascript
-window.THEME_CONFIG = {
-  colors: {
-    primary: "#hex",      // Main brand color
-    secondary: "#hex",    // Secondary accent
-    accent: "#hex",       // Highlights
-    background: "#hex",   // Page background
-    surface: "#ffffff",   // Card backgrounds
-    text: "#hex"          // Main text
-  },
-  fonts: {
-    heading: "'Font Name', serif",
-    body: "'Font Name', sans-serif"
-  },
-  heroImage: null,  // or "assets/images/filename.png"
-  style: "modern"   // modern, playful, academic, minimal
-};
-```
-
-## Question Guidelines
-
-1. **Include 5-10 questions** for a typical homework
-2. **Mix question types** - at least one of each type recommended
-3. **Every question MUST have a supplementary follow-up**
-4. **Free-text correctAnswer** should describe key points the AI will look for
-5. **Explanations should be educational** - help students learn, not just say "correct/wrong"
-6. **Points should reflect difficulty** - typically 5-20 points per question
-
-## Supplementary Question Rules
-
-- Supplementary questions appear when the main answer is wrong
-- They should test related but simpler concepts
-- Use multiple-choice or true-false only (not free-text)
-- Maximum 2 attempts allowed automatically
-
-## Theme Presets (for theme.js)
-
-**Playful** (younger students):
-- Colors: purples, pinks, yellows
-- Font: Nunito
-- Bright, engaging
-
-**Academic** (formal):
-- Colors: navy, gold, cream
-- Font: Crimson Pro, Source Sans
-- Professional, scholarly
-
-**Nature** (science topics):
-- Colors: greens, earth tones
-- Font: Merriweather
-- Calming, organic
-
-**Modern** (default):
-- Colors: blue, slate
-- Font: Playfair Display, Source Sans
-- Clean, contemporary
 
 ---
 
-## Example Request & Response
+## QUESTION TYPES
 
-**User Request:**
-> Create a Year 7 History homework about Ancient Rome with 5 questions. Use a classical/academic theme.
-
-**AI Response:**
+### 1. MULTIPLE CHOICE
+Select one correct answer from options.
 
 ```javascript
-// config/homework.js
-window.HOMEWORK_CONFIG = {
-  title: "Ancient Rome: Rise of an Empire",
-  subject: "History",
-  yearGroup: "Year 7",
-  instructions: "Answer all questions about Ancient Rome. For written answers, explain your thinking clearly with at least 2-3 sentences.",
-  passThreshold: 70,
-  teacherPassword: "teacher123",
-  
-  questions: [
-    {
-      id: 1,
-      type: "multiple-choice",
-      question: "According to legend, who founded the city of Rome?",
-      options: [
-        "Julius Caesar",
-        "Romulus and Remus",
-        "Augustus",
-        "Nero"
-      ],
-      correctAnswer: 1,
-      explanation: "According to Roman legend, twin brothers Romulus and Remus founded Rome in 753 BCE. Romulus killed Remus in a dispute and became the first king of Rome.",
-      points: 10,
-      supplementary: {
-        type: "true-false",
-        question: "Romulus and Remus were said to have been raised by a wolf.",
-        correctAnswer: true,
-        explanation: "The legend says the twins were abandoned as babies and nursed by a she-wolf before being found by a shepherd."
-      }
-    },
-    // ... 4 more questions
-  ]
-};
+{
+  id: 1,
+  type: "multiple-choice",
+  question: "What is the capital of France?",
+  options: ["London", "Paris", "Berlin", "Madrid"],
+  correctAnswer: 1,  // Index (0-based)
+  explanation: "Paris is the capital of France.",
+  points: 5,
+  supplementary: { /* see supplementary section */ }
+}
 ```
 
+### 2. TRUE/FALSE
+Simple true or false question.
+
 ```javascript
-// config/theme.js
+{
+  id: 2,
+  type: "true-false",
+  question: "The Earth is flat.",
+  correctAnswer: false,
+  explanation: "The Earth is roughly spherical.",
+  points: 5,
+  supplementary: { /* ... */ }
+}
+```
+
+### 3. FREE TEXT (AI Graded)
+Written answer graded by AI. Student must score 50%+ or retry.
+
+```javascript
+{
+  id: 3,
+  type: "free-text",
+  question: "Explain why recycling is important.",
+  correctAnswer: "Key points the AI should look for: reduces landfill waste, conserves resources, saves energy, reduces pollution.",
+  explanation: "Recycling helps protect our environment.",
+  points: 15,
+  supplementary: { /* ... */ }
+}
+```
+
+### 4. ORDERING
+Arrange items in the correct sequence.
+
+```javascript
+{
+  id: 4,
+  type: "ordering",
+  question: "Arrange these events in chronological order:",
+  items: [
+    "World War II ends",      // index 0
+    "Moon landing",           // index 1
+    "World War I begins",     // index 2
+    "Berlin Wall falls"       // index 3
+  ],
+  correctOrder: [2, 0, 1, 3],  // WWI, WWII, Moon, Berlin Wall
+  explanation: "WWI (1914), WWII ended (1945), Moon landing (1969), Berlin Wall (1989).",
+  points: 10,
+  supplementary: { /* ... */ }
+}
+```
+
+### 5. MATCHING
+Connect items from two columns.
+
+```javascript
+{
+  id: 5,
+  type: "matching",
+  question: "Match each country to its capital:",
+  leftItems: ["France", "Japan", "Egypt", "Brazil"],
+  rightItems: ["Tokyo", "Paris", "Brasília", "Cairo"],
+  correctPairs: {
+    0: 1,  // France -> Paris
+    1: 0,  // Japan -> Tokyo
+    2: 3,  // Egypt -> Cairo
+    3: 2   // Brazil -> Brasília
+  },
+  explanation: "Capital cities explanation.",
+  points: 10,
+  supplementary: { /* ... */ }
+}
+```
+
+### 6. FILL IN THE BLANKS (Word Bank)
+Complete passage using words from a bank.
+
+```javascript
+{
+  id: 6,
+  type: "fill-blanks",
+  question: "Complete the passage about photosynthesis:",
+  template: "Plants absorb {{blank1}} and {{blank2}} to produce {{blank3}}.",
+  blanks: {
+    blank1: { 
+      answer: "sunlight", 
+      acceptAlternatives: ["light", "solar energy"] 
+    },
+    blank2: { 
+      answer: "carbon dioxide", 
+      acceptAlternatives: ["CO2"] 
+    },
+    blank3: { 
+      answer: "glucose", 
+      acceptAlternatives: ["sugar", "food"] 
+    }
+  },
+  explanation: "Photosynthesis converts light energy into chemical energy.",
+  points: 10,
+  supplementary: { /* ... */ }
+}
+```
+
+### 7. CATEGORISATION
+Sort items into categories (drag and drop).
+
+```javascript
+{
+  id: 7,
+  type: "categorise",
+  question: "Sort these animals into categories:",
+  categories: ["Mammals", "Birds", "Reptiles"],
+  items: [
+    { text: "Eagle", correctCategory: 1 },
+    { text: "Snake", correctCategory: 2 },
+    { text: "Whale", correctCategory: 0 },
+    { text: "Penguin", correctCategory: 1 },
+    { text: "Crocodile", correctCategory: 2 },
+    { text: "Dolphin", correctCategory: 0 }
+  ],
+  explanation: "Mammals are warm-blooded, birds have feathers, reptiles are cold-blooded.",
+  points: 12,
+  supplementary: { /* ... */ }
+}
+```
+
+### 8. MULTIPLE RESPONSE (Select ALL)
+Select all correct answers (multiple can be correct).
+
+```javascript
+{
+  id: 8,
+  type: "multiple-response",
+  question: "Which are prime numbers? Select ALL that apply.",
+  options: ["2", "4", "7", "9", "11", "15"],
+  correctAnswers: [0, 2, 4],  // Indices: 2, 7, 11
+  partialCredit: true,
+  explanation: "Prime numbers are only divisible by 1 and themselves.",
+  points: 10,
+  supplementary: { /* ... */ }
+}
+```
+
+### 9. CLOZE DROPDOWN
+Select answers from dropdown menus in a passage.
+
+```javascript
+{
+  id: 9,
+  type: "cloze-dropdown",
+  question: "Complete the sentence:",
+  template: "Water freezes at {{blank1}} degrees {{blank2}}.",
+  blanks: {
+    blank1: {
+      options: ["0", "32", "100", "212"],
+      correctIndex: 0
+    },
+    blank2: {
+      options: ["Celsius", "Fahrenheit", "Kelvin"],
+      correctIndex: 0
+    }
+  },
+  explanation: "Water freezes at 0°C or 32°F.",
+  points: 5,
+  supplementary: { /* ... */ }
+}
+```
+
+---
+
+## SUPPLEMENTARY QUESTIONS
+
+Every question MUST have a supplementary follow-up. It appears when the main answer is wrong/insufficient.
+
+**Rules:**
+- Use only `multiple-choice` or `true-false` types (not free-text)
+- Should test simpler/related concept
+- Students get maximum 2 attempts
+
+```javascript
+supplementary: {
+  type: "true-false",  // or "multiple-choice"
+  question: "The follow-up question text",
+  correctAnswer: true,  // boolean for T/F, index for MCQ
+  options: ["A", "B", "C", "D"],  // Only for multiple-choice
+  explanation: "Explanation for the follow-up answer"
+}
+```
+
+---
+
+## 2. config/theme.js (OPTIONAL)
+
+Only generate if custom styling is requested.
+
+```javascript
 window.THEME_CONFIG = {
   colors: {
-    primary: "#722F37",
-    secondary: "#8B4513",
-    accent: "#DAA520",
-    background: "#FDF5E6",
-    surface: "#FFFAF0",
-    text: "#2F1810"
+    primary: "#1e3a5f",     // Main brand color
+    secondary: "#3d7ea6",   // Secondary accent
+    accent: "#c9a227",      // Highlights (gold works well)
+    background: "#faf8f5",  // Page background
+    surface: "#ffffff",     // Card backgrounds
+    text: "#2c2416"         // Main text color
   },
   fonts: {
-    heading: "'Cinzel', serif",
-    body: "'Crimson Pro', serif"
+    heading: "'Playfair Display', serif",
+    body: "'Source Sans 3', sans-serif"
   },
-  style: "academic"
+  style: "modern"  // modern, playful, academic, minimal
 };
 ```
+
+### Theme Presets
+
+**Playful** (younger students): bright purples/pinks/yellows, Nunito font
+**Academic** (formal): navy/gold/cream, Crimson Pro font  
+**Nature** (science): greens/earth tones, Merriweather font
+**Modern** (default): blue/slate, clean contemporary
+
+---
+
+## Question Guidelines
+
+1. **Include 5-10 questions** for typical homework
+2. **Mix question types** for engagement - use at least 3 different types
+3. **Every question MUST have a supplementary follow-up**
+4. **Difficulty progression** - start easier, get harder
+5. **Educational explanations** - help students learn
+6. **Points reflect difficulty** - 5pts easy, 10pts medium, 15-20pts hard
+
+---
+
+## Example Request
+
+> Create a Year 7 Science homework about the Solar System with 6 questions. Include ordering, matching, and categorisation questions. Use a space theme with dark colours.
 
 ---
 
 ## User Request
 
-[User describes: topic, year group/grade level, number of questions, and optional visual theme]
+[User describes: topic, year group, number of questions, preferred question types, visual theme]

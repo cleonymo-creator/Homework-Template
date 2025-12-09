@@ -947,6 +947,659 @@
     }
     
     /* =====================================================
+       ORDERING QUESTION
+       ===================================================== */
+    
+    .ordering-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    
+    .ordering-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: grab;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    
+    .ordering-item:hover:not(.disabled) {
+      border-color: var(--color-primary-light);
+      background: var(--color-surface);
+    }
+    
+    .ordering-item.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+    
+    .ordering-item.drag-over {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+      transform: scale(1.02);
+    }
+    
+    .ordering-item.disabled {
+      cursor: default;
+    }
+    
+    .ordering-item.correct-position {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    
+    .ordering-item.incorrect-position {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+    
+    .ordering-handle {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: var(--space-xs);
+      color: var(--color-text-muted);
+    }
+    
+    .ordering-handle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 1px;
+    }
+    
+    .ordering-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+    }
+    
+    .ordering-item.correct-position .ordering-number {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+    
+    .ordering-item.incorrect-position .ordering-number {
+      background: var(--color-error);
+      border-color: var(--color-error);
+      color: white;
+    }
+    
+    .ordering-text {
+      flex: 1;
+    }
+    
+    .ordering-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .ordering-arrow-btn {
+      padding: 4px 8px;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.75rem;
+      line-height: 1;
+      transition: all var(--transition-fast);
+    }
+    
+    .ordering-arrow-btn:hover:not(:disabled) {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+    
+    .ordering-arrow-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    
+    /* =====================================================
+       MATCHING QUESTION
+       ===================================================== */
+    
+    .matching-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    
+    .matching-columns {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    
+    @media (max-width: 640px) {
+      .matching-columns {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+      
+      .matching-lines {
+        display: none;
+      }
+    }
+    
+    .matching-column {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    
+    .matching-column-header {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-border-light);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .matching-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .matching-item:hover:not(.disabled):not(.matched) {
+      border-color: var(--color-primary-light);
+      background: var(--color-surface);
+    }
+    
+    .matching-item.selected {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+    }
+    
+    .matching-item.matched {
+      border-color: var(--color-secondary);
+      background: var(--color-info-bg);
+    }
+    
+    .matching-item.correct {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    
+    .matching-item.incorrect {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+    
+    .matching-item.disabled {
+      cursor: default;
+    }
+    
+    .matching-letter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    
+    .matching-item.selected .matching-letter,
+    .matching-item.matched .matching-letter {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+    
+    .matching-item.correct .matching-letter {
+      background: var(--color-success);
+      border-color: var(--color-success);
+    }
+    
+    .matching-item.incorrect .matching-letter {
+      background: var(--color-error);
+      border-color: var(--color-error);
+    }
+    
+    .matching-pair-indicator {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      background: var(--color-accent);
+      color: var(--color-primary-dark);
+      border-radius: var(--radius-sm);
+      margin-left: auto;
+    }
+    
+    .matching-lines {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      font-size: 1.5rem;
+    }
+    
+    .matching-instructions {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      text-align: center;
+      padding: var(--space-sm);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-sm);
+    }
+    
+    /* =====================================================
+       FILL IN THE BLANKS
+       ===================================================== */
+    
+    .fill-blanks-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    
+    .fill-blanks-passage {
+      font-size: 1.1rem;
+      line-height: 2.2;
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    .blank-input {
+      display: inline-block;
+      min-width: 120px;
+      padding: var(--space-xs) var(--space-sm);
+      margin: 0 var(--space-xs);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-align: center;
+      vertical-align: middle;
+      transition: all var(--transition-fast);
+    }
+    
+    .blank-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      border-style: solid;
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+    }
+    
+    .blank-input.correct {
+      border-color: var(--color-success);
+      border-style: solid;
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+    
+    .blank-input.incorrect {
+      border-color: var(--color-error);
+      border-style: solid;
+      background: var(--color-error-bg);
+      color: var(--color-error);
+    }
+    
+    .blank-input:disabled {
+      cursor: default;
+    }
+    
+    .word-bank {
+      padding: var(--space-lg);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    .word-bank-header {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+    
+    .word-bank-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    
+    .word-bank-word {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .word-bank-word:hover:not(.used):not(.disabled) {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+    }
+    
+    .word-bank-word.used {
+      opacity: 0.4;
+      text-decoration: line-through;
+      cursor: default;
+    }
+    
+    .word-bank-word.selected {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+    
+    .word-bank-word.disabled {
+      cursor: default;
+    }
+    
+    /* =====================================================
+       CATEGORISATION QUESTION
+       ===================================================== */
+    
+    .categorise-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    
+    .categorise-items-pool {
+      padding: var(--space-lg);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-md);
+      border: 2px dashed var(--color-border);
+      min-height: 60px;
+    }
+    
+    .categorise-items-pool.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+    
+    .categorise-pool-header {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+    
+    .categorise-pool-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    
+    .categorise-item {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: grab;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    
+    .categorise-item:hover:not(.disabled) {
+      border-color: var(--color-primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .categorise-item.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+    
+    .categorise-item.correct {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    
+    .categorise-item.incorrect {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+    
+    .categorise-item.disabled {
+      cursor: default;
+    }
+    
+    .categorise-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+    
+    .categorise-category {
+      padding: var(--space-md);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      min-height: 120px;
+      transition: all var(--transition-fast);
+    }
+    
+    .categorise-category.drag-over {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+    }
+    
+    .categorise-category-header {
+      font-weight: 600;
+      color: var(--color-text);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+    
+    .categorise-category-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      min-height: 40px;
+    }
+    
+    .categorise-category-empty {
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+      padding: var(--space-sm);
+    }
+    
+    /* =====================================================
+       MULTIPLE RESPONSE QUESTION
+       ===================================================== */
+    
+    .multiple-response-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    
+    .multiple-response-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .multiple-response-item:hover:not(.disabled) {
+      border-color: var(--color-primary-light);
+      background: var(--color-surface);
+    }
+    
+    .multiple-response-item.selected {
+      border-color: var(--color-primary);
+      background: var(--color-info-bg);
+    }
+    
+    .multiple-response-item.correct {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+    
+    .multiple-response-item.incorrect {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+    
+    .multiple-response-item.missed {
+      border-color: var(--color-warning);
+      background: var(--color-warning-bg);
+    }
+    
+    .multiple-response-item.disabled {
+      cursor: default;
+    }
+    
+    .multiple-response-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+    
+    .multiple-response-item.selected .multiple-response-checkbox {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+    
+    .multiple-response-item.correct .multiple-response-checkbox {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+    
+    .multiple-response-item.incorrect .multiple-response-checkbox {
+      background: var(--color-error);
+      border-color: var(--color-error);
+      color: white;
+    }
+    
+    .multiple-response-item.missed .multiple-response-checkbox {
+      background: var(--color-warning);
+      border-color: var(--color-warning);
+      color: white;
+    }
+    
+    .multiple-response-hint {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      margin-top: var(--space-sm);
+    }
+    
+    /* =====================================================
+       CLOZE DROPDOWN QUESTION
+       ===================================================== */
+    
+    .cloze-passage {
+      font-size: 1.1rem;
+      line-height: 2.4;
+      padding: var(--space-lg);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    .cloze-dropdown {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-md);
+      padding-right: var(--space-xl);
+      margin: 0 var(--space-xs);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235c5347' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      min-width: 140px;
+      transition: all var(--transition-fast);
+    }
+    
+    .cloze-dropdown:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+    }
+    
+    .cloze-dropdown.correct {
+      border-color: var(--color-success);
+      background-color: var(--color-success-bg);
+      color: var(--color-success);
+    }
+    
+    .cloze-dropdown.incorrect {
+      border-color: var(--color-error);
+      background-color: var(--color-error-bg);
+      color: var(--color-error);
+    }
+    
+    .cloze-dropdown:disabled {
+      cursor: default;
+      opacity: 0.9;
+    }
+
+    /* =====================================================
        BUTTONS
        ===================================================== */
     
@@ -2333,6 +2986,785 @@
     }
     
     // =====================================================
+    // ORDERING QUESTION COMPONENT
+    // =====================================================
+    
+    function OrderingQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [items, setItems] = useState([]);
+      const [draggedIndex, setDraggedIndex] = useState(null);
+      const [dragOverIndex, setDragOverIndex] = useState(null);
+      const [lastTaskId, setLastTaskId] = useState(null);
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          // Initialize with shuffled order
+          const indexed = task.items.map((text, originalIndex) => ({
+            text,
+            originalIndex
+          }));
+          const shuffled = shuffleArray(indexed);
+          setItems(shuffled);
+          setAnswer({ order: shuffled.map(item => item.originalIndex) });
+          setLastTaskId(task.id);
+        }
+      }, [task.id, task.items, lastTaskId]);
+      
+      // Sync items with answer if answer changes externally
+      useEffect(() => {
+        if (answer?.order && items.length > 0) {
+          const newItems = answer.order.map(origIdx => 
+            items.find(item => item.originalIndex === origIdx) || 
+            { text: task.items[origIdx], originalIndex: origIdx }
+          );
+          if (JSON.stringify(newItems.map(i => i.originalIndex)) !== JSON.stringify(items.map(i => i.originalIndex))) {
+            setItems(newItems);
+          }
+        }
+      }, [answer]);
+      
+      const handleDragStart = (e, index) => {
+        if (submitted) return;
+        setDraggedIndex(index);
+        e.dataTransfer.effectAllowed = 'move';
+      };
+      
+      const handleDragOver = (e, index) => {
+        e.preventDefault();
+        if (submitted || draggedIndex === null) return;
+        setDragOverIndex(index);
+      };
+      
+      const handleDragLeave = () => {
+        setDragOverIndex(null);
+      };
+      
+      const handleDrop = (e, dropIndex) => {
+        e.preventDefault();
+        if (submitted || draggedIndex === null) return;
+        
+        const newItems = [...items];
+        const [draggedItem] = newItems.splice(draggedIndex, 1);
+        newItems.splice(dropIndex, 0, draggedItem);
+        
+        setItems(newItems);
+        setAnswer({ order: newItems.map(item => item.originalIndex) });
+        setDraggedIndex(null);
+        setDragOverIndex(null);
+      };
+      
+      const handleDragEnd = () => {
+        setDraggedIndex(null);
+        setDragOverIndex(null);
+      };
+      
+      const moveItem = (fromIndex, direction) => {
+        if (submitted) return;
+        const toIndex = fromIndex + direction;
+        if (toIndex < 0 || toIndex >= items.length) return;
+        
+        const newItems = [...items];
+        [newItems[fromIndex], newItems[toIndex]] = [newItems[toIndex], newItems[fromIndex]];
+        
+        setItems(newItems);
+        setAnswer({ order: newItems.map(item => item.originalIndex) });
+      };
+      
+      const isCorrectPosition = (item, index) => {
+        return task.correctOrder[index] === item.originalIndex;
+      };
+      
+      if (items.length === 0) return null;
+      
+      return (
+        <div className="ordering-list">
+          {items.map((item, index) => {
+            let className = 'ordering-item';
+            if (draggedIndex === index) className += ' dragging';
+            if (dragOverIndex === index && draggedIndex !== index) className += ' drag-over';
+            if (submitted) {
+              className += ' disabled';
+              if (showCorrect) {
+                className += isCorrectPosition(item, index) ? ' correct-position' : ' incorrect-position';
+              }
+            }
+            
+            return (
+              <div
+                key={item.originalIndex}
+                className={className}
+                draggable={!submitted}
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, index)}
+                onDragEnd={handleDragEnd}
+              >
+                <div className="ordering-handle">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div className="ordering-number">{index + 1}</div>
+                <div className="ordering-text">{item.text}</div>
+                {!submitted && (
+                  <div className="ordering-arrows">
+                    <button
+                      className="ordering-arrow-btn"
+                      onClick={() => moveItem(index, -1)}
+                      disabled={index === 0}
+                      type="button"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      className="ordering-arrow-btn"
+                      onClick={() => moveItem(index, 1)}
+                      disabled={index === items.length - 1}
+                      type="button"
+                    >
+                      ▼
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // MATCHING QUESTION COMPONENT
+    // =====================================================
+    
+    function MatchingQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [selectedLeft, setSelectedLeft] = useState(null);
+      const [pairs, setPairs] = useState({});
+      const [lastTaskId, setLastTaskId] = useState(null);
+      
+      const leftLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const rightNumbers = ['1', '2', '3', '4', '5', '6', '7', '8'];
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          setPairs(answer?.pairs || {});
+          setSelectedLeft(null);
+          setLastTaskId(task.id);
+        }
+      }, [task.id, lastTaskId]);
+      
+      useEffect(() => {
+        if (answer?.pairs) {
+          setPairs(answer.pairs);
+        }
+      }, [answer]);
+      
+      const handleLeftClick = (leftIndex) => {
+        if (submitted) return;
+        
+        if (selectedLeft === leftIndex) {
+          setSelectedLeft(null);
+        } else {
+          setSelectedLeft(leftIndex);
+        }
+      };
+      
+      const handleRightClick = (rightIndex) => {
+        if (submitted) return;
+        
+        if (selectedLeft !== null) {
+          // Remove any existing pair for this left item
+          const newPairs = { ...pairs };
+          
+          // Also remove if this right item was already paired
+          Object.keys(newPairs).forEach(key => {
+            if (newPairs[key] === rightIndex) {
+              delete newPairs[key];
+            }
+          });
+          
+          newPairs[selectedLeft] = rightIndex;
+          setPairs(newPairs);
+          setAnswer({ pairs: newPairs });
+          setSelectedLeft(null);
+        }
+      };
+      
+      const removePair = (leftIndex) => {
+        if (submitted) return;
+        const newPairs = { ...pairs };
+        delete newPairs[leftIndex];
+        setPairs(newPairs);
+        setAnswer({ pairs: newPairs });
+      };
+      
+      const getPairForRight = (rightIndex) => {
+        return Object.keys(pairs).find(left => pairs[left] === rightIndex);
+      };
+      
+      const isCorrectPair = (leftIndex) => {
+        return task.correctPairs[leftIndex] === pairs[leftIndex];
+      };
+      
+      return (
+        <div className="matching-container">
+          <div className="matching-instructions">
+            Click an item on the left, then click its match on the right
+          </div>
+          
+          <div className="matching-columns">
+            {/* Left Column */}
+            <div className="matching-column">
+              <div className="matching-column-header">Items</div>
+              {task.leftItems.map((item, index) => {
+                let className = 'matching-item';
+                const isPaired = pairs[index] !== undefined;
+                
+                if (selectedLeft === index) className += ' selected';
+                if (isPaired) className += ' matched';
+                if (submitted) {
+                  className += ' disabled';
+                  if (showCorrect && isPaired) {
+                    className += isCorrectPair(index) ? ' correct' : ' incorrect';
+                  }
+                }
+                
+                return (
+                  <div
+                    key={index}
+                    className={className}
+                    onClick={() => isPaired && !submitted ? removePair(index) : handleLeftClick(index)}
+                  >
+                    <span className="matching-letter">{leftLetters[index]}</span>
+                    <span style={{ flex: 1 }}>{item}</span>
+                    {isPaired && (
+                      <span className="matching-pair-indicator">
+                        → {rightNumbers[pairs[index]]}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Lines indicator */}
+            <div className="matching-lines">⟷</div>
+            
+            {/* Right Column */}
+            <div className="matching-column">
+              <div className="matching-column-header">Matches</div>
+              {task.rightItems.map((item, index) => {
+                let className = 'matching-item';
+                const pairedLeftIndex = getPairForRight(index);
+                const isPaired = pairedLeftIndex !== undefined;
+                
+                if (isPaired) className += ' matched';
+                if (submitted) {
+                  className += ' disabled';
+                  if (showCorrect && isPaired) {
+                    className += isCorrectPair(parseInt(pairedLeftIndex)) ? ' correct' : ' incorrect';
+                  }
+                }
+                
+                return (
+                  <div
+                    key={index}
+                    className={className}
+                    onClick={() => handleRightClick(index)}
+                  >
+                    <span className="matching-letter">{rightNumbers[index]}</span>
+                    <span style={{ flex: 1 }}>{item}</span>
+                    {isPaired && (
+                      <span className="matching-pair-indicator">
+                        ← {leftLetters[pairedLeftIndex]}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // FILL IN THE BLANKS QUESTION COMPONENT
+    // =====================================================
+    
+    function FillBlanksQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [selectedWord, setSelectedWord] = useState(null);
+      const [lastTaskId, setLastTaskId] = useState(null);
+      const [shuffledWordBank, setShuffledWordBank] = useState([]);
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          // Create shuffled word bank from all correct answers
+          const words = Object.values(task.blanks).map(b => b.answer);
+          setShuffledWordBank(shuffleArray(words));
+          setLastTaskId(task.id);
+        }
+      }, [task.id, task.blanks, lastTaskId]);
+      
+      const blanks = answer?.blanks || {};
+      
+      const handleBlankClick = (blankId) => {
+        if (submitted) return;
+        
+        if (selectedWord !== null) {
+          // Place the selected word in this blank
+          const newBlanks = { ...blanks, [blankId]: selectedWord };
+          setAnswer({ blanks: newBlanks });
+          setSelectedWord(null);
+        } else if (blanks[blankId]) {
+          // Clear this blank
+          const newBlanks = { ...blanks };
+          delete newBlanks[blankId];
+          setAnswer({ blanks: newBlanks });
+        }
+      };
+      
+      const handleWordClick = (word) => {
+        if (submitted) return;
+        
+        if (selectedWord === word) {
+          setSelectedWord(null);
+        } else {
+          setSelectedWord(word);
+        }
+      };
+      
+      const isWordUsed = (word) => {
+        return Object.values(blanks).includes(word);
+      };
+      
+      const isBlankCorrect = (blankId) => {
+        const blankConfig = task.blanks[blankId];
+        const userAnswer = blanks[blankId]?.toLowerCase().trim();
+        
+        if (userAnswer === blankConfig.answer.toLowerCase()) return true;
+        if (blankConfig.acceptAlternatives) {
+          return blankConfig.acceptAlternatives.some(
+            alt => alt.toLowerCase() === userAnswer
+          );
+        }
+        return false;
+      };
+      
+      // Parse template and render with blanks
+      const renderPassage = () => {
+        const parts = task.template.split(/(\{\{[^}]+\}\})/g);
+        
+        return parts.map((part, index) => {
+          const match = part.match(/\{\{([^}]+)\}\}/);
+          if (match) {
+            const blankId = match[1];
+            const value = blanks[blankId] || '';
+            
+            let className = 'blank-input';
+            if (submitted && showCorrect) {
+              className += isBlankCorrect(blankId) ? ' correct' : ' incorrect';
+            }
+            
+            return (
+              <input
+                key={index}
+                type="text"
+                className={className}
+                value={value}
+                onClick={() => handleBlankClick(blankId)}
+                readOnly
+                disabled={submitted}
+                placeholder="click to fill"
+                style={{ width: Math.max(120, value.length * 10 + 40) + 'px' }}
+              />
+            );
+          }
+          return <span key={index}>{part}</span>;
+        });
+      };
+      
+      return (
+        <div className="fill-blanks-container">
+          <div className="fill-blanks-passage">
+            {renderPassage()}
+          </div>
+          
+          {!submitted && (
+            <div className="word-bank">
+              <div className="word-bank-header">Word Bank — Click a word, then click a blank</div>
+              <div className="word-bank-words">
+                {shuffledWordBank.map((word, index) => {
+                  let className = 'word-bank-word';
+                  if (isWordUsed(word)) className += ' used';
+                  if (selectedWord === word) className += ' selected';
+                  
+                  return (
+                    <button
+                      key={index}
+                      className={className}
+                      onClick={() => handleWordClick(word)}
+                      disabled={isWordUsed(word)}
+                      type="button"
+                    >
+                      {word}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {submitted && showCorrect && (
+            <div style={{ marginTop: 'var(--space-md)', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
+              <strong>Correct answers:</strong> {Object.values(task.blanks).map(b => b.answer).join(', ')}
+            </div>
+          )}
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // CATEGORISATION QUESTION COMPONENT
+    // =====================================================
+    
+    function CategoriseQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [pool, setPool] = useState([]);
+      const [categories, setCategories] = useState({});
+      const [draggedItem, setDraggedItem] = useState(null);
+      const [dragOverCategory, setDragOverCategory] = useState(null);
+      const [lastTaskId, setLastTaskId] = useState(null);
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          // Initialize pool with shuffled items
+          const items = task.items.map((item, index) => ({
+            ...item,
+            id: index
+          }));
+          setPool(shuffleArray(items));
+          
+          // Initialize empty categories
+          const cats = {};
+          task.categories.forEach((_, index) => {
+            cats[index] = [];
+          });
+          setCategories(cats);
+          setAnswer({ categories: cats });
+          setLastTaskId(task.id);
+        }
+      }, [task.id, task.items, lastTaskId]);
+      
+      useEffect(() => {
+        if (answer?.categories) {
+          setCategories(answer.categories);
+          // Update pool to remove items that are in categories
+          const usedIds = Object.values(answer.categories).flat().map(i => i.id);
+          const remainingPool = task.items
+            .map((item, index) => ({ ...item, id: index }))
+            .filter(item => !usedIds.includes(item.id));
+          setPool(remainingPool);
+        }
+      }, [answer]);
+      
+      const handleDragStart = (e, item, fromCategory = null) => {
+        if (submitted) return;
+        setDraggedItem({ item, fromCategory });
+        e.dataTransfer.effectAllowed = 'move';
+      };
+      
+      const handleDragOver = (e, categoryIndex) => {
+        e.preventDefault();
+        if (submitted) return;
+        setDragOverCategory(categoryIndex);
+      };
+      
+      const handleDragLeave = () => {
+        setDragOverCategory(null);
+      };
+      
+      const handleDrop = (e, categoryIndex) => {
+        e.preventDefault();
+        if (submitted || !draggedItem) return;
+        
+        const { item, fromCategory } = draggedItem;
+        
+        // Remove from source
+        if (fromCategory !== null) {
+          const newCats = { ...categories };
+          newCats[fromCategory] = newCats[fromCategory].filter(i => i.id !== item.id);
+          
+          // Add to destination
+          newCats[categoryIndex] = [...newCats[categoryIndex], item];
+          setCategories(newCats);
+          setAnswer({ categories: newCats });
+        } else {
+          // From pool
+          setPool(pool.filter(i => i.id !== item.id));
+          const newCats = { ...categories };
+          newCats[categoryIndex] = [...newCats[categoryIndex], item];
+          setCategories(newCats);
+          setAnswer({ categories: newCats });
+        }
+        
+        setDraggedItem(null);
+        setDragOverCategory(null);
+      };
+      
+      const handleDropToPool = (e) => {
+        e.preventDefault();
+        if (submitted || !draggedItem || draggedItem.fromCategory === null) return;
+        
+        const { item, fromCategory } = draggedItem;
+        
+        // Remove from category
+        const newCats = { ...categories };
+        newCats[fromCategory] = newCats[fromCategory].filter(i => i.id !== item.id);
+        setCategories(newCats);
+        setAnswer({ categories: newCats });
+        
+        // Add back to pool
+        setPool([...pool, item]);
+        
+        setDraggedItem(null);
+      };
+      
+      const handleDragEnd = () => {
+        setDraggedItem(null);
+        setDragOverCategory(null);
+      };
+      
+      const handleItemClick = (item, fromCategory = null) => {
+        if (submitted) return;
+        // Simple click to cycle through categories (accessibility alternative to drag)
+        // Not implementing full click cycling for brevity, drag is primary
+      };
+      
+      const isItemCorrect = (item, categoryIndex) => {
+        return item.correctCategory === categoryIndex;
+      };
+      
+      return (
+        <div className="categorise-container">
+          {/* Item Pool */}
+          <div 
+            className={`categorise-items-pool ${pool.length === 0 ? 'empty' : ''}`}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDropToPool}
+          >
+            {pool.length === 0 ? (
+              <span>All items sorted! ✓</span>
+            ) : (
+              <>
+                <div className="categorise-pool-header">Drag items to the correct category</div>
+                <div className="categorise-pool-items">
+                  {pool.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`categorise-item ${draggedItem?.item.id === item.id ? 'dragging' : ''}`}
+                      draggable={!submitted}
+                      onDragStart={(e) => handleDragStart(e, item, null)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      {item.text}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          
+          {/* Categories */}
+          <div className="categorise-categories">
+            {task.categories.map((categoryName, catIndex) => (
+              <div
+                key={catIndex}
+                className={`categorise-category ${dragOverCategory === catIndex ? 'drag-over' : ''}`}
+                onDragOver={(e) => handleDragOver(e, catIndex)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, catIndex)}
+              >
+                <div className="categorise-category-header">{categoryName}</div>
+                <div className="categorise-category-items">
+                  {categories[catIndex]?.length === 0 ? (
+                    <div className="categorise-category-empty">Drop items here</div>
+                  ) : (
+                    categories[catIndex]?.map((item) => {
+                      let className = 'categorise-item';
+                      if (submitted) {
+                        className += ' disabled';
+                        if (showCorrect) {
+                          className += isItemCorrect(item, catIndex) ? ' correct' : ' incorrect';
+                        }
+                      }
+                      if (draggedItem?.item.id === item.id) className += ' dragging';
+                      
+                      return (
+                        <div
+                          key={item.id}
+                          className={className}
+                          draggable={!submitted}
+                          onDragStart={(e) => handleDragStart(e, item, catIndex)}
+                          onDragEnd={handleDragEnd}
+                        >
+                          {item.text}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // MULTIPLE RESPONSE QUESTION COMPONENT
+    // =====================================================
+    
+    function MultipleResponseQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const [shuffledOptions, setShuffledOptions] = useState([]);
+      const [lastTaskId, setLastTaskId] = useState(null);
+      
+      useEffect(() => {
+        if (task.id !== lastTaskId) {
+          const indexed = task.options.map((text, originalIndex) => ({
+            text,
+            originalIndex
+          }));
+          setShuffledOptions(shuffleArray(indexed));
+          setLastTaskId(task.id);
+        }
+      }, [task.id, task.options, lastTaskId]);
+      
+      const selected = answer?.selected || [];
+      
+      const handleToggle = (originalIndex) => {
+        if (submitted) return;
+        
+        const newSelected = selected.includes(originalIndex)
+          ? selected.filter(i => i !== originalIndex)
+          : [...selected, originalIndex];
+        
+        setAnswer({ selected: newSelected });
+      };
+      
+      const isCorrectAnswer = (originalIndex) => {
+        return task.correctAnswers.includes(originalIndex);
+      };
+      
+      if (shuffledOptions.length === 0) return null;
+      
+      return (
+        <div>
+          <div className="multiple-response-hint">
+            Select ALL that apply ({task.correctAnswers.length} correct answer{task.correctAnswers.length !== 1 ? 's' : ''})
+          </div>
+          <div className="multiple-response-list">
+            {shuffledOptions.map((option, displayIndex) => {
+              const isSelected = selected.includes(option.originalIndex);
+              const isCorrect = isCorrectAnswer(option.originalIndex);
+              
+              let className = 'multiple-response-item';
+              if (isSelected) className += ' selected';
+              
+              if (submitted) {
+                className = 'multiple-response-item disabled';
+                if (showCorrect) {
+                  if (isSelected && isCorrect) {
+                    className += ' correct';
+                  } else if (isSelected && !isCorrect) {
+                    className += ' incorrect';
+                  } else if (!isSelected && isCorrect) {
+                    className += ' missed';
+                  }
+                }
+              }
+              
+              return (
+                <div
+                  key={displayIndex}
+                  className={className}
+                  onClick={() => handleToggle(option.originalIndex)}
+                >
+                  <div className="multiple-response-checkbox">
+                    {isSelected && '✓'}
+                    {submitted && showCorrect && !isSelected && isCorrect && '!'}
+                  </div>
+                  <span>{option.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    
+    // =====================================================
+    // CLOZE DROPDOWN QUESTION COMPONENT
+    // =====================================================
+    
+    function ClozeDropdownQuestion({ task, answer, setAnswer, submitted, showCorrect }) {
+      const selections = answer?.selections || {};
+      
+      const handleChange = (blankId, value) => {
+        if (submitted) return;
+        
+        const newSelections = { ...selections, [blankId]: parseInt(value) };
+        setAnswer({ selections: newSelections });
+      };
+      
+      const isBlankCorrect = (blankId) => {
+        return task.blanks[blankId].correctIndex === selections[blankId];
+      };
+      
+      // Parse template and render with dropdowns
+      const renderPassage = () => {
+        const parts = task.template.split(/(\{\{[^}]+\}\})/g);
+        
+        return parts.map((part, index) => {
+          const match = part.match(/\{\{([^}]+)\}\}/);
+          if (match) {
+            const blankId = match[1];
+            const blankConfig = task.blanks[blankId];
+            const value = selections[blankId];
+            
+            let className = 'cloze-dropdown';
+            if (submitted && showCorrect) {
+              className += isBlankCorrect(blankId) ? ' correct' : ' incorrect';
+            }
+            
+            return (
+              <select
+                key={index}
+                className={className}
+                value={value !== undefined ? value : ''}
+                onChange={(e) => handleChange(blankId, e.target.value)}
+                disabled={submitted}
+              >
+                <option value="">Select...</option>
+                {blankConfig.options.map((opt, optIndex) => (
+                  <option key={optIndex} value={optIndex}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            );
+          }
+          return <span key={index}>{part}</span>;
+        });
+      };
+      
+      return (
+        <div className="cloze-passage">
+          {renderPassage()}
+        </div>
+      );
+    }
+    
+    // =====================================================
     // SUPPLEMENTARY QUESTION COMPONENT
     // =====================================================
     
@@ -2507,6 +3939,29 @@
         if (task.type === 'free-text') {
           return answer.text && answer.text.trim().length >= 10;
         }
+        if (task.type === 'ordering') {
+          return answer.order && answer.order.length === task.items.length;
+        }
+        if (task.type === 'matching') {
+          return answer.pairs && Object.keys(answer.pairs).length === task.leftItems.length;
+        }
+        if (task.type === 'fill-blanks') {
+          const blankCount = Object.keys(task.blanks).length;
+          return answer.blanks && Object.keys(answer.blanks).length === blankCount;
+        }
+        if (task.type === 'categorise') {
+          // All items must be placed in categories
+          const totalItems = task.items.length;
+          const placedItems = Object.values(answer.categories || {}).flat().length;
+          return placedItems === totalItems;
+        }
+        if (task.type === 'multiple-response') {
+          return answer.selected && answer.selected.length > 0;
+        }
+        if (task.type === 'cloze-dropdown') {
+          const blankCount = Object.keys(task.blanks).length;
+          return answer.selections && Object.keys(answer.selections).length === blankCount;
+        }
         return false;
       };
       
@@ -2588,6 +4043,66 @@
               answer={answer}
               setAnswer={setAnswer}
               submitted={state.mainSubmitted && !state.needsRetry}
+            />
+          )}
+          
+          {task.type === 'ordering' && (
+            <OrderingQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'matching' && (
+            <MatchingQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'fill-blanks' && (
+            <FillBlanksQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'categorise' && (
+            <CategoriseQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'multiple-response' && (
+            <MultipleResponseQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
+            />
+          )}
+          
+          {task.type === 'cloze-dropdown' && (
+            <ClozeDropdownQuestion
+              task={task}
+              answer={answer}
+              setAnswer={setAnswer}
+              submitted={state.mainSubmitted && !state.needsRetry}
+              showCorrect={state.mainSubmitted}
             />
           )}
           
@@ -3541,6 +5056,7 @@
         let isCorrect = false;
         let feedback = task.explanation;
         let aiGrading = null;
+        let partialScore = null;
         
         if (task.type === 'multiple-choice') {
           isCorrect = answer?.selected === task.correctAnswer;
@@ -3550,6 +5066,116 @@
           aiGrading = await gradeTextAnswer(task.question, answer?.text || '', task.correctAnswer);
           isCorrect = aiGrading.isCorrect || aiGrading.score >= 70;
           feedback = aiGrading.feedback;
+        } else if (task.type === 'ordering') {
+          // Check if order matches exactly
+          const userOrder = answer?.order || [];
+          isCorrect = task.correctOrder.every((correctIdx, position) => userOrder[position] === correctIdx);
+          
+          // Calculate partial score
+          if (!isCorrect) {
+            const correctCount = task.correctOrder.filter((correctIdx, position) => userOrder[position] === correctIdx).length;
+            partialScore = Math.round((correctCount / task.correctOrder.length) * 100);
+            feedback = `${correctCount} of ${task.correctOrder.length} items in correct position. ${task.explanation}`;
+          }
+        } else if (task.type === 'matching') {
+          // Check all pairs
+          const userPairs = answer?.pairs || {};
+          let correctCount = 0;
+          
+          Object.keys(task.correctPairs).forEach(leftIdx => {
+            if (userPairs[leftIdx] === task.correctPairs[leftIdx]) {
+              correctCount++;
+            }
+          });
+          
+          isCorrect = correctCount === Object.keys(task.correctPairs).length;
+          
+          if (!isCorrect) {
+            partialScore = Math.round((correctCount / Object.keys(task.correctPairs).length) * 100);
+            feedback = `${correctCount} of ${Object.keys(task.correctPairs).length} pairs correct. ${task.explanation}`;
+          }
+        } else if (task.type === 'fill-blanks') {
+          const userBlanks = answer?.blanks || {};
+          let correctCount = 0;
+          
+          Object.keys(task.blanks).forEach(blankId => {
+            const blankConfig = task.blanks[blankId];
+            const userAnswer = (userBlanks[blankId] || '').toLowerCase().trim();
+            
+            if (userAnswer === blankConfig.answer.toLowerCase()) {
+              correctCount++;
+            } else if (blankConfig.acceptAlternatives) {
+              if (blankConfig.acceptAlternatives.some(alt => alt.toLowerCase() === userAnswer)) {
+                correctCount++;
+              }
+            }
+          });
+          
+          const totalBlanks = Object.keys(task.blanks).length;
+          isCorrect = correctCount === totalBlanks;
+          
+          if (!isCorrect) {
+            partialScore = Math.round((correctCount / totalBlanks) * 100);
+            feedback = `${correctCount} of ${totalBlanks} blanks correct. ${task.explanation}`;
+          }
+        } else if (task.type === 'categorise') {
+          const userCategories = answer?.categories || {};
+          let correctCount = 0;
+          let totalItems = task.items.length;
+          
+          Object.keys(userCategories).forEach(catIdx => {
+            userCategories[catIdx].forEach(item => {
+              if (item.correctCategory === parseInt(catIdx)) {
+                correctCount++;
+              }
+            });
+          });
+          
+          isCorrect = correctCount === totalItems;
+          
+          if (!isCorrect) {
+            partialScore = Math.round((correctCount / totalItems) * 100);
+            feedback = `${correctCount} of ${totalItems} items correctly categorised. ${task.explanation}`;
+          }
+        } else if (task.type === 'multiple-response') {
+          const userSelected = answer?.selected || [];
+          const correctAnswers = task.correctAnswers;
+          
+          // Count correct selections and incorrect selections
+          const correctSelections = userSelected.filter(idx => correctAnswers.includes(idx)).length;
+          const incorrectSelections = userSelected.filter(idx => !correctAnswers.includes(idx)).length;
+          const missedCorrect = correctAnswers.filter(idx => !userSelected.includes(idx)).length;
+          
+          isCorrect = correctSelections === correctAnswers.length && incorrectSelections === 0;
+          
+          if (!isCorrect) {
+            // Partial credit: correct selections - wrong selections, min 0
+            const score = Math.max(0, correctSelections - incorrectSelections);
+            partialScore = Math.round((score / correctAnswers.length) * 100);
+            
+            let feedbackParts = [];
+            if (correctSelections > 0) feedbackParts.push(`${correctSelections} correct`);
+            if (incorrectSelections > 0) feedbackParts.push(`${incorrectSelections} incorrect`);
+            if (missedCorrect > 0) feedbackParts.push(`${missedCorrect} missed`);
+            feedback = `${feedbackParts.join(', ')}. ${task.explanation}`;
+          }
+        } else if (task.type === 'cloze-dropdown') {
+          const userSelections = answer?.selections || {};
+          let correctCount = 0;
+          
+          Object.keys(task.blanks).forEach(blankId => {
+            if (task.blanks[blankId].correctIndex === userSelections[blankId]) {
+              correctCount++;
+            }
+          });
+          
+          const totalBlanks = Object.keys(task.blanks).length;
+          isCorrect = correctCount === totalBlanks;
+          
+          if (!isCorrect) {
+            partialScore = Math.round((correctCount / totalBlanks) * 100);
+            feedback = `${correctCount} of ${totalBlanks} selections correct. ${task.explanation}`;
+          }
         }
         
         const needsRetry = task.type === 'free-text' && aiGrading?.score < 50;
@@ -3560,6 +5186,7 @@
           isCorrect,
           feedback,
           aiGrading,
+          partialScore,
           needsRetry,
           needsSupplementary,
           complete: isCorrect && !task.supplementary,
